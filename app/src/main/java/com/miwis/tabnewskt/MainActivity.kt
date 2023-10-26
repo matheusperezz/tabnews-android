@@ -29,6 +29,8 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun TabnewsKtApp(navController: NavHostController) {
+fun TabnewsKtApp(
+
+) {
 
 }
