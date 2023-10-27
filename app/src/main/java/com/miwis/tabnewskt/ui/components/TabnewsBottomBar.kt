@@ -9,8 +9,12 @@ import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.navigation.NavDestination.Companion.hierarchy
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.currentBackStackEntryAsState
 
 sealed class BottomAppBarItem(
   val label: String,
@@ -43,16 +47,21 @@ fun TabnewsBottomAppBar(
   item: BottomAppBarItem,
   modifier: Modifier = Modifier,
   items: List<BottomAppBarItem> = emptyList(),
+  navController: NavHostController,
   onItemChange: (BottomAppBarItem) -> Unit = {}
 ) {
+
+  val navBackStackEntry by navController.currentBackStackEntryAsState()
+  val currentDestination = navBackStackEntry?.destination
+
   NavigationBar(modifier) {
-    items.forEach {
-      val label = it.label
-      val icon = it.icon
+    items.forEach { screen ->
+      val label = screen.label
+      val icon = screen.icon
       NavigationBarItem(
-        selected = item.label == label,
+        selected = currentDestination?.hierarchy?.any { it.route == screen.label } == true,
         label = { Text(label) },
-        onClick = { onItemChange(it) },
+        onClick = { onItemChange(screen) },
         icon = { Icon(icon, contentDescription = null) })
     }
   }

@@ -3,7 +3,9 @@ package com.miwis.tabnewskt.ui.navigation
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
+import androidx.navigation.navOptions
 import androidx.navigation.navigation
+import com.miwis.tabnewskt.ui.components.BottomAppBarItem
 
 internal const val mainGraphRoute = "mainGraph"
 
@@ -20,4 +22,29 @@ fun NavGraphBuilder.mainGraph(navController: NavHostController) {
 
 fun NavController.navigateToMainGraph() {
   navigate(mainGraphRoute)
+}
+
+fun NavController.navigateSingleTopWithPopUpTo(
+  item: BottomAppBarItem
+) {
+  val (route, navigate) = when (item) {
+    BottomAppBarItem.Relevants -> Pair(
+      relevantTabsListRoute,
+      ::navigateToRelevant
+    )
+    BottomAppBarItem.News -> Pair(
+      newTabsRoute,
+      ::navigateToNewsTabs
+    )
+    BottomAppBarItem.Olds -> Pair(
+      oldTabsRoute,
+      ::navigateToOlds
+    )
+  }
+
+  val navOptions = navOptions {
+    launchSingleTop = true
+    popUpTo(route)
+  }
+  navigate(navOptions)
 }
