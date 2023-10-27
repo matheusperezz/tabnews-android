@@ -5,7 +5,6 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.navOptions
 import androidx.navigation.navigation
-import com.miwis.tabnewskt.ui.components.BottomAppBarItem
 
 internal const val mainGraphRoute = "mainGraph"
 

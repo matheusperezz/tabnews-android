@@ -7,7 +7,7 @@ import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
 import com.miwis.tabnewskt.ui.screens.NewTabsScreen
 
-internal const val newTabsRoute = "news"
+const val newTabsRoute = "news"
 
 fun NavGraphBuilder.newTabsScreen(navController: NavHostController) {
   composable(newTabsRoute) {

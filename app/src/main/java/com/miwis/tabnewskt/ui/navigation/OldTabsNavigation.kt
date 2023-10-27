@@ -7,7 +7,7 @@ import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
 import com.miwis.tabnewskt.ui.screens.OldTabsScreen
 
-internal const val oldTabsRoute = "olds"
+const val oldTabsRoute = "olds"
 
 fun NavGraphBuilder.oldTabsScreen(navController: NavHostController) {
   composable(oldTabsRoute) {

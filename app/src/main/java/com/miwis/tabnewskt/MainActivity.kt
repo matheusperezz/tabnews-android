@@ -7,18 +7,24 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.NavigationBar
+import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.navigation.NavDestination
+import androidx.navigation.NavDestination.Companion.hierarchy
+import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.miwis.tabnewskt.ui.components.BottomAppBarItem
-import com.miwis.tabnewskt.ui.components.TabnewsBottomAppBar
-import com.miwis.tabnewskt.ui.components.bottomAppBarItems
 import com.miwis.tabnewskt.ui.navigation.TabnewsNavHost
-import com.miwis.tabnewskt.ui.navigation.navigateSingleTopWithPopUpTo
+import com.miwis.tabnewskt.ui.navigation.bottomAppBarItems
 import com.miwis.tabnewskt.ui.theme.TabnewsKtTheme
 
 class MainActivity : ComponentActivity() {
@@ -27,16 +33,16 @@ class MainActivity : ComponentActivity() {
     setContent {
 
       val navController = rememberNavController()
+      val navBackStackEntry by navController.currentBackStackEntryAsState()
+      val currentDestination = navBackStackEntry?.destination
 
       TabnewsKtTheme {
         Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
           TabnewsKtApp(
-            onBottomBarItemSelectChange = { item ->
-              navController.navigateSingleTopWithPopUpTo(item)
-            },
-            navController = navController
+            navController = navController,
+            currentDestination = currentDestination
           ) {
-              TabnewsNavHost(navController = navController)
+            TabnewsNavHost(navController = navController)
           }
         }
       }
@@ -48,22 +54,43 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun TabnewsKtApp(
   navController: NavHostController,
-  bottomBarAppItemSelected: BottomAppBarItem = bottomAppBarItems.first(),
-  onBottomBarItemSelectChange: (BottomAppBarItem) -> Unit = {},
-  onFabClick: () -> Unit = {},
+  currentDestination: NavDestination?,
+  // onFabClick: () -> Unit = {},
   content: @Composable () -> Unit
 ) {
   Scaffold(
     bottomBar = {
-      TabnewsBottomAppBar(
-        item = bottomBarAppItemSelected,
-        items = bottomAppBarItems,
-        onItemChange = onBottomBarItemSelectChange,
-        navController = navController
-      )
+      NavigationBar {
+        bottomAppBarItems.forEach { screen ->
+          val isSelected =
+            currentDestination?.hierarchy?.any { it.route == screen.route } == true
+          val icon = screen.icon
+          NavigationBarItem(
+            selected = isSelected,
+            onClick = {
+              navController.navigate(screen.route) {
+                popUpTo(navController.graph.findStartDestination().id) {
+                  saveState = true
+                }
+                launchSingleTop = true
+                restoreState = true
+              }
+            },
+            icon = {
+              Icon(
+                imageVector = icon,
+                contentDescription = null
+              )
+            },
+            label = {
+              Text(text = screen.label)
+            }
+          )
+        }
+      }
     }
   ) {
-    Box(modifier = Modifier.padding(it)){
+    Box(modifier = Modifier.padding(it)) {
       content()
     }
   }
