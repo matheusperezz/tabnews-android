@@ -27,6 +27,14 @@ import com.miwis.tabnewskt.ui.navigation.TabnewsNavHost
 import com.miwis.tabnewskt.ui.navigation.bottomAppBarItems
 import com.miwis.tabnewskt.ui.theme.TabnewsKtTheme
 
+/**
+ *  TODO: Implementar a Lista com LazyColumn com Mock
+ *
+ *  TODO: Realizar requisição a API para obter os dados via (TabnewsAPI)
+ *
+ *
+ * **/
+
 class MainActivity : ComponentActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
