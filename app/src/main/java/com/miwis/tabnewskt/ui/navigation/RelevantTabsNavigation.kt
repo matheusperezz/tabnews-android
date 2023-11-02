@@ -11,7 +11,11 @@ const val relevantTabsListRoute = "relevants"
 
 fun NavGraphBuilder.relevantTabsScreen(navController: NavHostController) {
   composable(relevantTabsListRoute) {
-    RelevantTabsScreen()
+    RelevantTabsScreen(
+      onPostClick = { post ->
+        navController.navigateToPostDetails(post.id)
+      }
+    )
   }
 }
 

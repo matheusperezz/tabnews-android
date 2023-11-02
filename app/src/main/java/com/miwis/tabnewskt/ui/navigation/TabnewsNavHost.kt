@@ -11,5 +11,6 @@ fun TabnewsNavHost(navController: NavHostController) {
     startDestination = mainGraphRoute
   ){
     mainGraph(navController)
+    postDetailsScreen(navController)
   }
 }

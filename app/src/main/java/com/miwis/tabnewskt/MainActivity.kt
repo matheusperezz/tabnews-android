@@ -17,6 +17,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavDestination
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
@@ -98,7 +99,10 @@ fun TabnewsKtApp(
       }
     }
   ) {
-    Box(modifier = Modifier.padding(it)) {
+    Box(modifier = Modifier
+      .padding(it)
+      .padding(8.dp)
+    ) {
       content()
     }
   }
