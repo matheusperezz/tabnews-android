@@ -23,7 +23,7 @@ import com.miwis.tabnewskt.ui.theme.Typography
 
 @Composable
 fun PostList(
-  posts: List<Post> = samplePosts,
+  posts: List<Post> = emptyList(),
   onPostClick: (Post) -> Unit = {},
   modifier: Modifier = Modifier
 ) {
