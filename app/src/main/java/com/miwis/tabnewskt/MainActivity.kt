@@ -95,7 +95,7 @@ fun TabnewsKtApp(
           )
         }
       }
-    }
+    },
   ) {
     Box(modifier = Modifier
       .padding(it)
