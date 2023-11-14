@@ -18,16 +18,21 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavDestination
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.miwis.tabnewskt.data.services.PostService
+import com.miwis.tabnewskt.data.utils.showMessage
 import com.miwis.tabnewskt.ui.navigation.TabnewsNavHost
 import com.miwis.tabnewskt.ui.navigation.bottomAppBarItems
 import com.miwis.tabnewskt.ui.theme.TabnewsKtTheme
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 /**
  *  TODO: Realizar requisição a API para obter os dados via (TabnewsAPI)
@@ -35,10 +40,19 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+
+  @Inject
+  lateinit var service: PostService
+
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    setContent {
 
+    lifecycleScope.launch {
+      val posts = service.fetchFirstRelevants()
+      showMessage("Result: $posts")
+    }
+
+    setContent {
       val navController = rememberNavController()
       val navBackStackEntry by navController.currentBackStackEntryAsState()
       val currentDestination = navBackStackEntry?.destination

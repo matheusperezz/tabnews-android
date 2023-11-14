@@ -3,11 +3,7 @@ package com.miwis.tabnewskt.data.utils
 import com.miwis.tabnewskt.data.models.Post
 import java.util.Date
 
-/**
- * Requisições são feitas assim:
- * https://www.tabnews.com.br/api/v1/contents/{{usuario}}/{{titulo_do_post}}/
- *
- * **/
+
 
 val samplePosts = listOf(
   Post(

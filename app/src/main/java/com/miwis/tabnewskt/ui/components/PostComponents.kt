@@ -23,25 +23,25 @@ import com.miwis.tabnewskt.ui.theme.Typography
 
 @Composable
 fun PostList(
+  modifier: Modifier = Modifier,
   posts: List<Post> = emptyList(),
   onPostClick: (Post) -> Unit = {},
-  modifier: Modifier = Modifier
 ) {
   LazyColumn(
     modifier = modifier,
     verticalArrangement = Arrangement.spacedBy(8.dp)
   ) {
     items(posts) { post ->
-      PostItem(post, onPostClick = onPostClick)
+      PostItem(post = post, onPostClick = onPostClick)
     }
   }
 }
 
 @Composable
 fun PostItem(
+  modifier: Modifier = Modifier,
   post: Post,
-  onPostClick: (Post) -> Unit = {},
-  modifier: Modifier = Modifier
+  onPostClick: (Post) -> Unit = {}
 ) {
   val postedAt = post.publishedAt.convertToPostDate(post)
 
