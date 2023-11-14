@@ -21,7 +21,7 @@ fun NavGraphBuilder.relevantTabsScreen(navController: NavHostController) {
       uiState = uiState,
       onPostClick = { post ->
         navController.navigateToPostDetails(post.id)
-      }
+      },
     )
   }
 }

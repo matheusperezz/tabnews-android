@@ -35,7 +35,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 /**
- *  TODO: Realizar requisição a API para obter os dados via (TabnewsAPI)
+ *  TODO: Usar a requisição no ViewModel para popular a lista
  * **/
 
 @AndroidEntryPoint
