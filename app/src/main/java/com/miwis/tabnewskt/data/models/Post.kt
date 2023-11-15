@@ -1,25 +1,18 @@
 package com.miwis.tabnewskt.data.models
 
-import com.squareup.moshi.Json
-import java.util.Date
-
 data class Post(
   val id: String,
-  val ownerId: String?,
-  val parentId: String?,
+  val owner_id: String?,
+  val parend_id: String?,
   val slug: String?,
   val title: String?,
   val status: String?,
-  val sourceUrl: String?,
-  @Json(name = "created_at")
-  val createdAt: Date?,
-  @Json(name = "updated_at")
-  val updatedAt: Date?,
-  @Json(name = "published_at")
-  val publishedAt: Date?,
-  @Json(name = "deleted_at")
-  val deletedAt: Date?,
+  val source_url: String?,
+  val created_at: String?,
+  val updated_at: String?,
+  val published_at: String?,
+  val deleted_at: String?,
   val tabcoins: Int,
-  val ownerUsername: String?,
-  val childrenDeepCount: Int?
+  val owner_username: String,
+  val children_deep_count: Int?
 )

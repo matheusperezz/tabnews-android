@@ -14,11 +14,8 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.miwis.tabnewskt.data.models.Post
-import com.miwis.tabnewskt.data.utils.convertToPostDate
-import com.miwis.tabnewskt.data.utils.samplePosts
 import com.miwis.tabnewskt.ui.theme.Typography
 
 @Composable
@@ -65,11 +62,11 @@ fun PostItem(
       }
 
       Text(
-        text = "${post.tabcoins} tabcoins  •  ${post.childrenDeepCount} comentários  •  ${post.publishedAt}",
+        text = "${post.tabcoins} tabcoins  •  ${post.children_deep_count} comentários  •  ${post.published_at}",
         style = Typography.bodySmall,
       )
 
-      post.ownerUsername?.let {
+      post.owner_username?.let {
         Text(
           text = it,
           style = Typography.bodyMedium,
@@ -101,27 +98,9 @@ fun PostDetails(
     Row(
       horizontalArrangement = Arrangement.spacedBy(16.dp)
     ) {
-      post.ownerUsername?.let { Text(text = it, style = Typography.labelSmall) }
-      post.publishedAt?.let { Text(text = it.convertToPostDate(post), style = Typography.labelSmall) }
+      post.owner_username?.let { Text(text = it, style = Typography.labelSmall) }
+      post.published_at?.let { Text(text = it, style = Typography.labelSmall) }
     }
 
   }
-}
-
-@Preview(showBackground = true)
-@Composable
-private fun PostItemPreview() {
-  PostItem(post = samplePosts.first())
-}
-
-@Preview(showBackground = true)
-@Composable
-private fun PostListPreview() {
-  PostList()
-}
-
-@Preview(showBackground = true)
-@Composable
-fun PostDetailsPreview() {
-  PostDetails(post = samplePosts.first())
 }
