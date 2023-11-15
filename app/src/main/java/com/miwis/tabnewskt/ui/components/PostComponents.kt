@@ -43,7 +43,6 @@ fun PostItem(
   post: Post,
   onPostClick: (Post) -> Unit = {}
 ) {
-  val postedAt = post.publishedAt.convertToPostDate(post)
 
   Card(
     modifier = modifier
@@ -55,23 +54,27 @@ fun PostItem(
       modifier = Modifier.padding(16.dp),
       verticalArrangement = Arrangement.spacedBy(4.dp)
     ) {
-      Text(
-        text = post.title,
-        style = Typography.titleMedium,
-        modifier = Modifier
-          .fillMaxWidth()
-          .heightIn(30.dp)
-      )
+      post.title?.let {
+        Text(
+          text = it,
+          style = Typography.titleMedium,
+          modifier = Modifier
+            .fillMaxWidth()
+            .heightIn(30.dp)
+        )
+      }
 
       Text(
-        text = "${post.tabcoins} tabcoins  •  ${post.childrenDeepCount} comentários  •  $postedAt",
+        text = "${post.tabcoins} tabcoins  •  ${post.childrenDeepCount} comentários  •  ${post.publishedAt}",
         style = Typography.bodySmall,
       )
 
-      Text(
-        text = post.ownerUsername,
-        style = Typography.bodyMedium,
-      )
+      post.ownerUsername?.let {
+        Text(
+          text = it,
+          style = Typography.bodyMedium,
+        )
+      }
     }
 
   }
@@ -88,16 +91,18 @@ fun PostDetails(
       .padding(8.dp)
   )
   {
-    Text(
-      text = post.slug,
-      style = Typography.titleMedium,
-      modifier = Modifier.padding(vertical = 8.dp)
-    )
+    post.slug?.let {
+      Text(
+        text = it,
+        style = Typography.titleMedium,
+        modifier = Modifier.padding(vertical = 8.dp)
+      )
+    }
     Row(
       horizontalArrangement = Arrangement.spacedBy(16.dp)
     ) {
-      Text(text = post.ownerUsername, style = Typography.labelSmall)
-      Text(text = post.publishedAt.convertToPostDate(post), style = Typography.labelSmall)
+      post.ownerUsername?.let { Text(text = it, style = Typography.labelSmall) }
+      post.publishedAt?.let { Text(text = it.convertToPostDate(post), style = Typography.labelSmall) }
     }
 
   }

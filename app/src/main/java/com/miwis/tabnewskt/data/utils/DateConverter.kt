@@ -7,7 +7,7 @@ fun Date.convertToPostDate(post: Post): String {
   val publishedAt = post.publishedAt
   val now = Date()
 
-  val differenceInDays = now.time - publishedAt.time
+  val differenceInDays = now.time - (publishedAt?.time ?: 1)
   val differenceInHours = differenceInDays / (1000 * 60 * 60)
   val differenceInMinutes = differenceInDays / (1000 * 60)
 

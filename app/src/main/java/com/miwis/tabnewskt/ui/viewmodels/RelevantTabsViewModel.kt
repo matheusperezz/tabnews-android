@@ -3,6 +3,7 @@ package com.miwis.tabnewskt.ui.viewmodels
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.miwis.tabnewskt.data.models.Post
+import com.miwis.tabnewskt.data.services.PostService
 import com.miwis.tabnewskt.data.utils.samplePosts
 import com.miwis.tabnewskt.ui.uistates.RelevantUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -18,7 +19,9 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class RelevantTabsViewModel @Inject constructor() : ViewModel() {
+class RelevantTabsViewModel @Inject constructor(
+  private val service: PostService
+) : ViewModel() {
 
   private var currentUiStateJob: Job? = null
   private val _uiState = MutableStateFlow<RelevantUiState>(
@@ -47,8 +50,8 @@ class RelevantTabsViewModel @Inject constructor() : ViewModel() {
     }
   }
 
-  fun fetchTabs(): Flow<List<Post>> {
-    return flowOf(samplePosts)
+  private suspend fun fetchTabs(): Flow<List<Post>> {
+    return flowOf(service.fetchFirstRelevants())
   }
 
 }
