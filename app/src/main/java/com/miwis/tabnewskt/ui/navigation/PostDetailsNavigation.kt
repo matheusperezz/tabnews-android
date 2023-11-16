@@ -1,7 +1,5 @@
 package com.miwis.tabnewskt.ui.navigation
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.material3.Text
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
