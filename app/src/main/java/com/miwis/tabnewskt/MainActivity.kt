@@ -35,7 +35,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 /**
- *  TODO: Implementar a navegação para os posts própriamente ditos
+ *  TODO: Arrumar o viewModel para fazer uma requisição ao entrar em um Post
  * **/
 
 @AndroidEntryPoint
