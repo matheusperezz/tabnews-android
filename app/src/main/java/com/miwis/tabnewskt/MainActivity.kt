@@ -35,7 +35,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 /**
- *  TODO: Arrumar o viewModel para fazer uma requisição ao entrar em um Post
+ *  TODO: Tela não faz o scroll quando abro um post específico
  * **/
 
 @AndroidEntryPoint

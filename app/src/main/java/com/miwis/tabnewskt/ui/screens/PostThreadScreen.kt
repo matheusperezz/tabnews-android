@@ -1,9 +1,11 @@
 package com.miwis.tabnewskt.ui.screens
 
+import android.util.Log
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.CircularProgressIndicator
@@ -38,11 +40,11 @@ fun PostDetailsScreen(
     }
   }
 
-  Box(
+  Column(
     modifier = Modifier
-      .fillMaxSize()
-      .padding(16.dp),
-    contentAlignment = Alignment.Center
+      .fillMaxWidth()
+      .padding(8.dp),
+    horizontalAlignment = Alignment.CenterHorizontally
   ) {
     when (uiState) {
       is PostDetailsState.Loading -> {
@@ -50,11 +52,12 @@ fun PostDetailsScreen(
       }
       is PostDetailsState.Success -> {
         val postDetails = (uiState as PostDetailsState.Success).postDetails
-        Column {
-          Text(text = "Título: ${postDetails.title}", fontWeight = FontWeight.Bold)
-          Spacer(modifier = Modifier.height(8.dp))
-          Text(text = "Conteúdo: ${postDetails.body}")
-        }
+        Text(text = "Título: ${postDetails.title}", fontWeight = FontWeight.Bold)
+        Spacer(modifier = Modifier.height(8.dp))
+        Log.i("TabnewsKTKT", "PostDetailsScreen: ${postDetails.body}")
+        Text(text = """
+          ${postDetails.body}
+        """.trimIndent())
       }
       is PostDetailsState.Error -> {
         navController.popBackStack()
