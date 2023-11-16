@@ -1,5 +1,7 @@
 package com.miwis.tabnewskt.ui.navigation
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -13,6 +15,7 @@ import com.miwis.tabnewskt.ui.viewmodels.RelevantTabsViewModel
 
 const val relevantTabsListRoute = "relevants"
 
+@RequiresApi(Build.VERSION_CODES.O)
 fun NavGraphBuilder.relevantTabsScreen(navController: NavHostController) {
   composable(relevantTabsListRoute) {
     val viewModel = hiltViewModel<RelevantTabsViewModel>()
@@ -20,7 +23,7 @@ fun NavGraphBuilder.relevantTabsScreen(navController: NavHostController) {
     RelevantTabsScreen(
       uiState = uiState,
       onPostClick = { post ->
-        navController.navigateToPostDetails(post.id)
+        navController.navigateToPostDetails(post.id, postOwner = post.owner_username, postSlug = post.slug)
       },
     )
   }

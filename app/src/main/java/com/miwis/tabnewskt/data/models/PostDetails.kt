@@ -1,12 +1,13 @@
 package com.miwis.tabnewskt.data.models
 
-data class Post(
+data class PostDetails(
   val id: String,
   val owner_id: String?,
   val parend_id: String?,
   val slug: String,
   val title: String?,
   val status: String?,
+  val body: String,
   val source_url: String?,
   val created_at: String,
   val updated_at: String?,

@@ -35,7 +35,6 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 /**
- *  TODO: Fazer um conversor de data para os Posts
  *  TODO: Implementar a navegação para os posts própriamente ditos
  * **/
 

@@ -1,5 +1,7 @@
 package com.miwis.tabnewskt.ui.screens
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -13,8 +15,9 @@ import androidx.compose.ui.Modifier
 import com.miwis.tabnewskt.data.models.Post
 import com.miwis.tabnewskt.ui.components.PostList
 import com.miwis.tabnewskt.ui.theme.Typography
-import com.miwis.tabnewskt.ui.uistates.RelevantUiState
+import com.miwis.tabnewskt.ui.viewmodels.RelevantUiState
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun RelevantTabsScreen(
   uiState: RelevantUiState,

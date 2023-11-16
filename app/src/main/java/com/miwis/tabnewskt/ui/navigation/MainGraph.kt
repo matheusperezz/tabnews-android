@@ -1,5 +1,7 @@
 package com.miwis.tabnewskt.ui.navigation
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
@@ -8,6 +10,7 @@ import androidx.navigation.navigation
 
 internal const val mainGraphRoute = "mainGraph"
 
+@RequiresApi(Build.VERSION_CODES.O)
 fun NavGraphBuilder.mainGraph(navController: NavHostController) {
   navigation(
     startDestination = relevantTabsListRoute,
