@@ -1,5 +1,7 @@
 package com.miwis.tabnewskt.ui.components
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -16,8 +18,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.miwis.tabnewskt.data.models.Post
+import com.miwis.tabnewskt.data.utils.convertDateToString
 import com.miwis.tabnewskt.ui.theme.Typography
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun PostList(
   modifier: Modifier = Modifier,
@@ -34,12 +38,15 @@ fun PostList(
   }
 }
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun PostItem(
   modifier: Modifier = Modifier,
   post: Post,
   onPostClick: (Post) -> Unit = {}
 ) {
+
+  val dateFormated = convertDateToString(post.created_at)
 
   Card(
     modifier = modifier
@@ -62,16 +69,14 @@ fun PostItem(
       }
 
       Text(
-        text = "${post.tabcoins} tabcoins  •  ${post.children_deep_count} comentários  •  ${post.published_at}",
+        text = "${post.tabcoins} tabcoins  •  ${post.children_deep_count} comentários  •  $dateFormated",
         style = Typography.bodySmall,
       )
 
-      post.owner_username?.let {
-        Text(
-          text = it,
-          style = Typography.bodyMedium,
-        )
-      }
+      Text(
+        text = post.owner_username,
+        style = Typography.bodyMedium,
+      )
     }
 
   }

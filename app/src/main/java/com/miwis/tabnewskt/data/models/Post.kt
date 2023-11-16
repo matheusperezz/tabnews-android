@@ -8,7 +8,7 @@ data class Post(
   val title: String?,
   val status: String?,
   val source_url: String?,
-  val created_at: String?,
+  val created_at: String,
   val updated_at: String?,
   val published_at: String?,
   val deleted_at: String?,
