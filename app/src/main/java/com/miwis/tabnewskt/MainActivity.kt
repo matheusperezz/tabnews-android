@@ -35,7 +35,12 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 /**
- *  TODO: Tela não faz o scroll quando abro um post específico
+ *  Desafios
+ *
+ *  TODO: Fazer o app ler markdown
+ *  TODO: Implementar as outras telas
+ *  TODO: Implementar os comentários de cada post
+ *  TODO: Implementar login?
  * **/
 
 @AndroidEntryPoint
