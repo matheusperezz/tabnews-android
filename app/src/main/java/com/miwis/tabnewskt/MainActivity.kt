@@ -1,8 +1,10 @@
 package com.miwis.tabnewskt
 
+import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -35,9 +37,8 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 /**
- *  Desafios
+ *  Próximos passos:
  *
- *  TODO: Fazer o app ler markdown
  *  TODO: Implementar as outras telas
  *  TODO: Implementar os comentários de cada post
  *  TODO: Implementar login?
@@ -49,6 +50,7 @@ class MainActivity : ComponentActivity() {
   @Inject
   lateinit var service: PostService
 
+  @RequiresApi(Build.VERSION_CODES.O)
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
 
