@@ -10,28 +10,30 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.flow.onEmpty
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-sealed class RelevantUiState {
-  object Loading: RelevantUiState()
-  object Empty: RelevantUiState()
+sealed class NewsUiState {
+
+  object Loading : NewsUiState()
+
+  object Empty : NewsUiState()
+
   data class Sucess(
     val posts: List<Post> = emptyList()
-  ): RelevantUiState()
+  ) : NewsUiState()
 
 }
+
 @HiltViewModel
-class RelevantTabsViewModel @Inject constructor(
+class NewTabsViewModel @Inject constructor(
   private val service: PostService
 ) : ViewModel() {
-
-  private var currentUiStateJob: Job? = null
-  private val _uiState = MutableStateFlow<RelevantUiState>(
-    RelevantUiState.Loading
+  private var currentUiState: Job? = null
+  private val _uiState = MutableStateFlow<NewsUiState>(
+    NewsUiState.Loading
   )
   val uiState = _uiState.asStateFlow()
 
@@ -40,24 +42,23 @@ class RelevantTabsViewModel @Inject constructor(
   }
 
   private fun loadUiState(){
-    currentUiStateJob?.cancel()
-    currentUiStateJob = viewModelScope.launch {
-      fetchTabs()
+    currentUiState?.cancel()
+    currentUiState = viewModelScope.launch {
+      fetchNews()
         .onStart {
-          _uiState.update { RelevantUiState.Loading }
+          _uiState.update { NewsUiState.Loading }
         }
-        .collect { posts ->
-          if (posts.isEmpty()) {
-            _uiState.update { RelevantUiState.Empty }
+        .collect { posts->
+          if (posts.isEmpty()){
+            _uiState.update { NewsUiState.Empty }
           } else {
-            _uiState.update { RelevantUiState.Sucess(posts) }
+            _uiState.update { NewsUiState.Sucess(posts) }
           }
         }
     }
   }
 
-  private suspend fun fetchTabs(): Flow<List<Post>> {
-    return flowOf(service.fetchFirstRelevants())
+  private suspend fun fetchNews(): Flow<List<Post>> {
+    return flowOf(service.fetchNewPosts())
   }
-
 }

@@ -1,7 +1,6 @@
 package com.miwis.tabnewskt.ui.navigation
 
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.MailOutline
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.Star
@@ -24,12 +23,6 @@ sealed class BottomAppBarItem(
     route = newTabsRoute
   )
 
-  object Olds : BottomAppBarItem(
-    label = "Antigos",
-    icon = Icons.Filled.DateRange,
-    route = oldTabsRoute
-  )
-
   object Settings : BottomAppBarItem(
     label = "Configurações",
     icon = Icons.Filled.Settings,
@@ -40,6 +33,5 @@ sealed class BottomAppBarItem(
 val bottomAppBarItems = listOf(
   BottomAppBarItem.Relevants,
   BottomAppBarItem.News,
-  BottomAppBarItem.Olds,
   BottomAppBarItem.Settings
 )

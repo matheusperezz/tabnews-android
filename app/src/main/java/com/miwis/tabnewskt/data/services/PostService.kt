@@ -21,6 +21,13 @@ interface PostService {
     @Query("strategy") strategy: String = "relevant"
   ): List<Post>
 
+  @GET("contents")
+  suspend fun fetchNewPosts(
+    @Query("page") page: Int = 1,
+    @Query("per_page") perPage: Int = 10,
+    @Query("strategy") strategy: String = "new"
+  ): List<Post>
+
   @GET("contents/{user}/{slug}")
   suspend fun fetchPostFromUser(
     @Path("user") user: String,
