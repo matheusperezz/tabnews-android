@@ -1,5 +1,6 @@
 package com.miwis.tabnewskt.ui.screens
 
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -15,6 +16,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
@@ -60,7 +62,8 @@ fun PostDetailsScreen(
         Spacer(modifier = Modifier.height(8.dp))
         MarkdownText(
           markdown = postDetails.body,
-          fontResource = R.font.roboto_mono
+          fontResource = R.font.roboto_mono,
+          color = if (isSystemInDarkTheme()) Color.White else Color.Black
         )
 
       }
