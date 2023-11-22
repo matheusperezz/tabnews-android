@@ -1,4 +1,4 @@
-package com.miwis.tabnewskt.ui.navigation
+package com.miwis.tabnewskt.ui.navigation.posts
 
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder

@@ -1,4 +1,4 @@
-package com.miwis.tabnewskt.ui.navigation
+package com.miwis.tabnewskt.ui.navigation.posts
 
 import android.os.Build
 import androidx.annotation.RequiresApi
@@ -10,17 +10,17 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
-import com.miwis.tabnewskt.ui.screens.RelevantTabsScreen
-import com.miwis.tabnewskt.ui.viewmodels.RelevantTabsViewModel
+import com.miwis.tabnewskt.ui.screens.NewTabsScreen
+import com.miwis.tabnewskt.ui.viewmodels.NewTabsViewModel
 
-const val relevantTabsListRoute = "relevants"
+const val newTabsRoute = "news"
 
 @RequiresApi(Build.VERSION_CODES.O)
-fun NavGraphBuilder.relevantTabsScreen(navController: NavHostController) {
-  composable(relevantTabsListRoute) {
-    val viewModel = hiltViewModel<RelevantTabsViewModel>()
+fun NavGraphBuilder.newTabsScreen(navController: NavHostController) {
+  composable(newTabsRoute) {
+    val viewModel = hiltViewModel<NewTabsViewModel>()
     val uiState by viewModel.uiState.collectAsState()
-    RelevantTabsScreen(
+    NewTabsScreen(
       uiState = uiState,
       onPostClick = { post ->
         navController.navigateToPostDetails(
@@ -28,11 +28,11 @@ fun NavGraphBuilder.relevantTabsScreen(navController: NavHostController) {
           postOwner = post.owner_username,
           postSlug = post.slug
         )
-      },
+      }
     )
   }
 }
 
-fun NavController.navigateToRelevant(navOptions: NavOptions? = null) {
-  navigate(relevantTabsListRoute, navOptions)
+fun NavController.navigateToNewsTabs(navOptions: NavOptions? = null) {
+  navigate(newTabsRoute, navOptions)
 }

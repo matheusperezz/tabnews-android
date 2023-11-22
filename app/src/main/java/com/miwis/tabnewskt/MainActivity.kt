@@ -30,7 +30,10 @@ import androidx.navigation.compose.rememberNavController
 import com.miwis.tabnewskt.data.services.PostService
 import com.miwis.tabnewskt.data.utils.showMessage
 import com.miwis.tabnewskt.ui.navigation.TabnewsNavHost
-import com.miwis.tabnewskt.ui.navigation.bottomAppBarItems
+import com.miwis.tabnewskt.ui.navigation.posts.bottomAppBarItems
+import com.miwis.tabnewskt.ui.navigation.posts.newTabsRoute
+import com.miwis.tabnewskt.ui.navigation.posts.relevantTabsListRoute
+import com.miwis.tabnewskt.ui.navigation.posts.settingsRoute
 import com.miwis.tabnewskt.ui.theme.TabnewsKtTheme
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -68,9 +71,15 @@ class MainActivity : ComponentActivity() {
 
       TabnewsKtTheme {
         Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
+          val currentRoute = currentDestination?.route
+          val containsIntoBottomAppBarItem = when (currentRoute){
+            relevantTabsListRoute, newTabsRoute, settingsRoute -> true
+            else -> false
+          }
           TabnewsKtApp(
             navController = navController,
-            currentDestination = currentDestination
+            currentDestination = currentDestination,
+            isShowBottomBar = containsIntoBottomAppBarItem
           ) {
             TabnewsNavHost(navController = navController)
           }
@@ -85,37 +94,40 @@ class MainActivity : ComponentActivity() {
 fun TabnewsKtApp(
   navController: NavHostController,
   currentDestination: NavDestination?,
+  isShowBottomBar: Boolean = false,
   // onFabClick: () -> Unit = {},
   content: @Composable () -> Unit
 ) {
   Scaffold(
     bottomBar = {
-      NavigationBar {
-        bottomAppBarItems.forEach { screen ->
-          val isSelected =
-            currentDestination?.hierarchy?.any { it.route == screen.route } == true
-          val icon = screen.icon
-          NavigationBarItem(
-            selected = isSelected,
-            onClick = {
-              navController.navigate(screen.route) {
-                popUpTo(navController.graph.findStartDestination().id) {
-                  saveState = true
+      if(isShowBottomBar){
+        NavigationBar {
+          bottomAppBarItems.forEach { screen ->
+            val isSelected =
+              currentDestination?.hierarchy?.any { it.route == screen.route } == true
+            val icon = screen.icon
+            NavigationBarItem(
+              selected = isSelected,
+              onClick = {
+                navController.navigate(screen.route) {
+                  popUpTo(navController.graph.findStartDestination().id) {
+                    saveState = true
+                  }
+                  launchSingleTop = true
+                  restoreState = true
                 }
-                launchSingleTop = true
-                restoreState = true
+              },
+              icon = {
+                Icon(
+                  imageVector = icon,
+                  contentDescription = null
+                )
+              },
+              label = {
+                Text(text = screen.label)
               }
-            },
-            icon = {
-              Icon(
-                imageVector = icon,
-                contentDescription = null
-              )
-            },
-            label = {
-              Text(text = screen.label)
-            }
-          )
+            )
+          }
         }
       }
     },

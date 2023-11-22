@@ -1,4 +1,4 @@
-package com.miwis.tabnewskt.ui.navigation
+package com.miwis.tabnewskt.ui.navigation.posts
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.MailOutline

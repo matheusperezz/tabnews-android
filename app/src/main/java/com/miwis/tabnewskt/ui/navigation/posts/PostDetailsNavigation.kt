@@ -1,4 +1,4 @@
-package com.miwis.tabnewskt.ui.navigation
+package com.miwis.tabnewskt.ui.navigation.posts
 
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController

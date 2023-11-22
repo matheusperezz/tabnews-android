@@ -1,4 +1,4 @@
-package com.miwis.tabnewskt.ui.navigation
+package com.miwis.tabnewskt.ui.navigation.posts
 
 import android.os.Build
 import androidx.annotation.RequiresApi
