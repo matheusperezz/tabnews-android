@@ -18,10 +18,7 @@ const val relevantTabsListRoute = "relevants"
 @RequiresApi(Build.VERSION_CODES.O)
 fun NavGraphBuilder.relevantTabsScreen(navController: NavHostController) {
   composable(relevantTabsListRoute) {
-    val viewModel = hiltViewModel<RelevantTabsViewModel>()
-    val uiState by viewModel.uiState.collectAsState()
     RelevantTabsScreen(
-      uiState = uiState,
       onPostClick = { post ->
         navController.navigateToPostDetails(
           post.id,

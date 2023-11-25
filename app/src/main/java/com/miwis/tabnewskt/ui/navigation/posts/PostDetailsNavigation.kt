@@ -36,10 +36,9 @@ fun NavGraphBuilder.postDetailsScreen(navController: NavHostController) {
   ) { backStackEntry ->
     val postOwner = backStackEntry.arguments?.getString(postOwnerArgument)
     val postSlug = backStackEntry.arguments?.getString(postSlugArgument)
-    val viewModel = hiltViewModel<PostDetailsViewModel>()
 
     if (postOwner != null && postSlug != null){
-      PostDetailsScreen(viewModel = viewModel, postOwner = postOwner, postSlug = postSlug, navController = navController)
+      PostDetailsScreen(postOwner = postOwner, postSlug = postSlug, navController = navController)
     } else {
       navController.popBackStack()
     }

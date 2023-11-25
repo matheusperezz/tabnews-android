@@ -10,20 +10,27 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.miwis.tabnewskt.data.models.Post
 import com.miwis.tabnewskt.ui.components.PostList
 import com.miwis.tabnewskt.ui.theme.Typography
+import com.miwis.tabnewskt.ui.viewmodels.RelevantTabsViewModel
 import com.miwis.tabnewskt.ui.viewmodels.RelevantUiState
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun RelevantTabsScreen(
-  uiState: RelevantUiState,
+  viewModel: RelevantTabsViewModel = hiltViewModel(),
   onPostClick: (Post) -> Unit = {}
 ) {
-  when(uiState){
+
+  val uiState by viewModel.uiState.collectAsState()
+
+  when (uiState) {
     is RelevantUiState.Loading -> {
       Box(Modifier.fillMaxSize()) {
         CircularProgressIndicator(
@@ -45,7 +52,7 @@ fun RelevantTabsScreen(
             text = "Não foi possível carregar os posts",
             style = Typography.titleLarge
           )
-          TextButton(onClick = { } ) {
+          TextButton(onClick = { }) {
             Text(text = "Recarregar posts")
           }
         }
@@ -55,7 +62,7 @@ fun RelevantTabsScreen(
     is RelevantUiState.Sucess -> {
       PostList(
         onPostClick = onPostClick,
-        posts = uiState.posts,
+        posts = (uiState as RelevantUiState.Sucess).posts,
       )
     }
   }

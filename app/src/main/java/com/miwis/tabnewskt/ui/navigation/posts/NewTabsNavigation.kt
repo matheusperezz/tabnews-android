@@ -18,10 +18,7 @@ const val newTabsRoute = "news"
 @RequiresApi(Build.VERSION_CODES.O)
 fun NavGraphBuilder.newTabsScreen(navController: NavHostController) {
   composable(newTabsRoute) {
-    val viewModel = hiltViewModel<NewTabsViewModel>()
-    val uiState by viewModel.uiState.collectAsState()
     NewTabsScreen(
-      uiState = uiState,
       onPostClick = { post ->
         navController.navigateToPostDetails(
           post.id,

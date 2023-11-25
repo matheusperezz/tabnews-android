@@ -19,6 +19,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.miwis.tabnewskt.R
 import com.miwis.tabnewskt.ui.viewmodels.PostDetailsState
@@ -27,7 +28,7 @@ import dev.jeziellago.compose.markdowntext.MarkdownText
 
 @Composable
 fun PostDetailsScreen(
-  viewModel: PostDetailsViewModel,
+  viewModel: PostDetailsViewModel = hiltViewModel(),
   postOwner: String,
   postSlug: String,
   navController: NavHostController
