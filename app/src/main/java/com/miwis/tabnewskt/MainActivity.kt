@@ -20,7 +20,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavDestination
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
@@ -28,21 +27,22 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.miwis.tabnewskt.data.services.PostService
-import com.miwis.tabnewskt.data.utils.showMessage
+import com.miwis.tabnewskt.ui.components.TabnewsKtTopBar
 import com.miwis.tabnewskt.ui.navigation.TabnewsNavHost
+import com.miwis.tabnewskt.ui.navigation.auth.loginRoute
 import com.miwis.tabnewskt.ui.navigation.posts.bottomAppBarItems
 import com.miwis.tabnewskt.ui.navigation.posts.newTabsRoute
+import com.miwis.tabnewskt.ui.navigation.posts.postDetailsRoute
 import com.miwis.tabnewskt.ui.navigation.posts.relevantTabsListRoute
 import com.miwis.tabnewskt.ui.navigation.posts.settingsRoute
 import com.miwis.tabnewskt.ui.theme.TabnewsKtTheme
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 /**
  *  Próximos passos:
  *
- *  TODO: Implementar as outras telas
+ *  TODO: Ajustar espaçamentos do LazyList
  *  TODO: Implementar os comentários de cada post
  *  TODO: Implementar login?
  *
@@ -58,12 +58,6 @@ class MainActivity : ComponentActivity() {
   @RequiresApi(Build.VERSION_CODES.O)
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-
-    lifecycleScope.launch {
-      val posts = service.fetchFirstRelevants()
-      showMessage("Result: $posts")
-    }
-
     setContent {
       val navController = rememberNavController()
       val navBackStackEntry by navController.currentBackStackEntryAsState()
@@ -72,14 +66,22 @@ class MainActivity : ComponentActivity() {
       TabnewsKtTheme {
         Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
           val currentRoute = currentDestination?.route
-          val containsIntoBottomAppBarItem = when (currentRoute){
-            relevantTabsListRoute, newTabsRoute, settingsRoute -> true
+
+          val isShowBottomBar = when (currentRoute){
+            relevantTabsListRoute, newTabsRoute, settingsRoute, postDetailsRoute -> true
             else -> false
           }
+
+          val isShowTopBar = when (currentRoute){
+            loginRoute -> false
+            else -> true
+          }
+
           TabnewsKtApp(
             navController = navController,
             currentDestination = currentDestination,
-            isShowBottomBar = containsIntoBottomAppBarItem
+            isShowBottomBar = isShowBottomBar,
+            isShowTopBar = isShowTopBar
           ) {
             TabnewsNavHost(navController = navController)
           }
@@ -95,6 +97,7 @@ fun TabnewsKtApp(
   navController: NavHostController,
   currentDestination: NavDestination?,
   isShowBottomBar: Boolean = false,
+  isShowTopBar: Boolean = false,
   // onFabClick: () -> Unit = {},
   content: @Composable () -> Unit
 ) {
@@ -131,6 +134,15 @@ fun TabnewsKtApp(
         }
       }
     },
+    topBar = {
+      if (isShowTopBar){
+        TabnewsKtTopBar(
+          onBackButtonClick = {
+            navController.popBackStack()
+          }
+        )
+      }
+    }
   ) {
     Box(modifier = Modifier
       .padding(it)
