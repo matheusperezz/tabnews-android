@@ -19,5 +19,5 @@ fun NavGraphBuilder.authenticationGraph(navController: NavHostController) {
 }
 
 fun NavController.navigateToAuthenticationGraph() {
-  navigate(mainGraphRoute)
+  navigate(authenticationGraphRoute)
 }

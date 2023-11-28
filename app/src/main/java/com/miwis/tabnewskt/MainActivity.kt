@@ -30,7 +30,9 @@ import com.miwis.tabnewskt.data.services.PostService
 import com.miwis.tabnewskt.ui.components.TabnewsKtTopBar
 import com.miwis.tabnewskt.ui.navigation.TabnewsNavHost
 import com.miwis.tabnewskt.ui.navigation.auth.loginRoute
+import com.miwis.tabnewskt.ui.navigation.auth.navigateToAuthenticationGraph
 import com.miwis.tabnewskt.ui.navigation.posts.bottomAppBarItems
+import com.miwis.tabnewskt.ui.navigation.posts.navigateToSettings
 import com.miwis.tabnewskt.ui.navigation.posts.newTabsRoute
 import com.miwis.tabnewskt.ui.navigation.posts.postDetailsRoute
 import com.miwis.tabnewskt.ui.navigation.posts.relevantTabsListRoute
@@ -65,6 +67,7 @@ class MainActivity : ComponentActivity() {
 
       TabnewsKtTheme {
         Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
+
           val currentRoute = currentDestination?.route
 
           val isShowBottomBar = when (currentRoute){
@@ -139,6 +142,12 @@ fun TabnewsKtApp(
         TabnewsKtTopBar(
           onBackButtonClick = {
             navController.popBackStack()
+          },
+          onSettingsClick = {
+            navController.navigateToSettings()
+          },
+          onProfileClick = {
+            navController.navigateToAuthenticationGraph()
           }
         )
       }
@@ -146,7 +155,7 @@ fun TabnewsKtApp(
   ) {
     Box(modifier = Modifier
       .padding(it)
-      .padding(8.dp)
+      .padding(horizontal = 8.dp)
     ) {
       content()
     }

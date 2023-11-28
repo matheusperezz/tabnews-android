@@ -6,8 +6,10 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -32,8 +34,16 @@ fun PostList(
     modifier = modifier,
     verticalArrangement = Arrangement.spacedBy(8.dp)
   ) {
+    item {
+      Spacer(modifier = modifier.height(4.dp))
+    }
+
     items(posts) { post ->
       PostItem(post = post, onPostClick = onPostClick)
+    }
+
+    item {
+      Spacer(modifier = modifier.height(4.dp))
     }
   }
 }
@@ -77,34 +87,6 @@ fun PostItem(
         text = post.owner_username,
         style = Typography.bodyMedium,
       )
-    }
-
-  }
-}
-
-@Composable
-fun PostDetails(
-  post: Post,
-  modifier: Modifier = Modifier
-) {
-  Column(
-    modifier = modifier
-      .fillMaxSize()
-      .padding(8.dp)
-  )
-  {
-    post.slug?.let {
-      Text(
-        text = it,
-        style = Typography.titleMedium,
-        modifier = Modifier.padding(vertical = 8.dp)
-      )
-    }
-    Row(
-      horizontalArrangement = Arrangement.spacedBy(16.dp)
-    ) {
-      post.owner_username?.let { Text(text = it, style = Typography.labelSmall) }
-      post.published_at?.let { Text(text = it, style = Typography.labelSmall) }
     }
 
   }
