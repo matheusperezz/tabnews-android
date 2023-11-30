@@ -44,7 +44,6 @@ import javax.inject.Inject
 /**
  *  Próximos passos:
  *
- *  TODO: Ajustar espaçamentos do LazyList
  *  TODO: Implementar os comentários de cada post
  *  TODO: Implementar login?
  *

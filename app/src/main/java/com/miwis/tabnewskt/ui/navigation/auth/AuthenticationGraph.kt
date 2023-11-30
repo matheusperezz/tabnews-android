@@ -4,8 +4,6 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.navigation
-import com.miwis.tabnewskt.ui.navigation.posts.mainGraphRoute
-import com.miwis.tabnewskt.ui.navigation.posts.relevantTabsListRoute
 
 internal const val authenticationGraphRoute = "loginGraph"
 

@@ -49,7 +49,7 @@ fun PostDetailsScreen(
       .fillMaxWidth()
       .verticalScroll(rememberScrollState())
       .padding(horizontal = 8.dp)
-      .padding(top = 8.dp),
+      .padding(vertical = 16.dp),
     horizontalAlignment = Alignment.CenterHorizontally
   ) {
     when (uiState) {
