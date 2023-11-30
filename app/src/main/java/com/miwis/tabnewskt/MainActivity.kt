@@ -86,7 +86,6 @@ class MainActivity : ComponentActivity() {
           }
 
           val isShowFab = when(currentRoute){
-            // Not show on the form screen
             loginRoute, newPostRoute -> false
             else -> true
           }
