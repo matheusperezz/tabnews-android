@@ -7,6 +7,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import com.miwis.tabnewskt.ui.navigation.auth.authenticationGraph
 import com.miwis.tabnewskt.ui.navigation.auth.authenticationGraphRoute
+import com.miwis.tabnewskt.ui.navigation.posts.createPostScreen
 import com.miwis.tabnewskt.ui.navigation.posts.mainGraph
 import com.miwis.tabnewskt.ui.navigation.posts.postDetailsScreen
 
@@ -20,5 +21,6 @@ fun TabnewsNavHost(navController: NavHostController) {
     mainGraph(navController)
     authenticationGraph(navController)
     postDetailsScreen(navController)
+    createPostScreen(navController)
   }
 }

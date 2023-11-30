@@ -8,6 +8,8 @@ import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -27,12 +29,16 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.miwis.tabnewskt.data.services.PostService
+import com.miwis.tabnewskt.ui.components.TabnewsKtFab
 import com.miwis.tabnewskt.ui.components.TabnewsKtTopBar
 import com.miwis.tabnewskt.ui.navigation.TabnewsNavHost
+import com.miwis.tabnewskt.ui.navigation.auth.authenticationGraphRoute
 import com.miwis.tabnewskt.ui.navigation.auth.loginRoute
 import com.miwis.tabnewskt.ui.navigation.auth.navigateToAuthenticationGraph
 import com.miwis.tabnewskt.ui.navigation.posts.bottomAppBarItems
+import com.miwis.tabnewskt.ui.navigation.posts.navigateToNewPost
 import com.miwis.tabnewskt.ui.navigation.posts.navigateToSettings
+import com.miwis.tabnewskt.ui.navigation.posts.newPostRoute
 import com.miwis.tabnewskt.ui.navigation.posts.newTabsRoute
 import com.miwis.tabnewskt.ui.navigation.posts.postDetailsRoute
 import com.miwis.tabnewskt.ui.navigation.posts.relevantTabsListRoute
@@ -79,11 +85,18 @@ class MainActivity : ComponentActivity() {
             else -> true
           }
 
+          val isShowFab = when(currentRoute){
+            // Not show on the form screen
+            loginRoute, newPostRoute -> false
+            else -> true
+          }
+
           TabnewsKtApp(
             navController = navController,
             currentDestination = currentDestination,
             isShowBottomBar = isShowBottomBar,
-            isShowTopBar = isShowTopBar
+            isShowTopBar = isShowTopBar,
+            isShowFab = isShowFab,
           ) {
             TabnewsNavHost(navController = navController)
           }
@@ -100,7 +113,7 @@ fun TabnewsKtApp(
   currentDestination: NavDestination?,
   isShowBottomBar: Boolean = false,
   isShowTopBar: Boolean = false,
-  // onFabClick: () -> Unit = {},
+  isShowFab: Boolean = false,
   content: @Composable () -> Unit
 ) {
   Scaffold(
@@ -149,6 +162,13 @@ fun TabnewsKtApp(
             navController.navigateToAuthenticationGraph()
           }
         )
+      }
+    },
+    floatingActionButton = {
+      if (isShowFab){
+        TabnewsKtFab(text = "Criar post", icon = Icons.Filled.Add, onClick = {
+          navController.navigateToNewPost()
+        })
       }
     }
   ) {
