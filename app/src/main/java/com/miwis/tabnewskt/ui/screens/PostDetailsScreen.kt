@@ -34,7 +34,7 @@ fun PostDetailsScreen(
   navController: NavHostController
 ) {
 
-  val uiState by viewModel.state.collectAsState()
+  val uiState by viewModel.uiState.collectAsState()
 
   DisposableEffect(Unit) {
     viewModel.loadPostDetails(postSlug.orEmpty(), postOwner.orEmpty())

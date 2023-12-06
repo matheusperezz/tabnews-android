@@ -11,6 +11,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -20,11 +21,18 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.miwis.tabnewskt.ui.theme.Typography
+import com.miwis.tabnewskt.ui.viewmodels.NewPostViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun NewPostScreen() {
+fun NewPostScreen(
+  viewModel: NewPostViewModel = hiltViewModel()
+) {
+
+  val uiState by viewModel.uiState.collectAsState()
+
   Column(
     verticalArrangement = Arrangement.spacedBy(
       space = 16.dp,
@@ -34,28 +42,27 @@ fun NewPostScreen() {
       .fillMaxWidth()
       .padding(8.dp)
   ) {
-    var title by remember { mutableStateOf("") }
-    var body by remember { mutableStateOf("") }
-    var bibliography by remember { mutableStateOf("") }
 
     Text(text = "Publicar novo conteúdo", style = Typography.titleMedium)
 
     OutlinedTextField(
-      value = title,
-      onValueChange = { title = it },
+      value = uiState.title,
+      onValueChange = uiState.onTitleChange,
       modifier = Modifier.fillMaxWidth()
     )
 
     OutlinedTextField(
-      value = body,
-      onValueChange = { body = it },
+      value = uiState.body,
+      onValueChange = uiState.onBodyChange,
       keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
-      modifier = Modifier.fillMaxWidth().height(120.dp)
+      modifier = Modifier
+        .fillMaxWidth()
+        .height(120.dp)
     )
 
     OutlinedTextField(
-      value = bibliography,
-      onValueChange = { bibliography = it },
+      value = uiState.bibliography,
+      onValueChange = uiState.onBibliographyChange,
       modifier = Modifier.fillMaxWidth()
     )
 
