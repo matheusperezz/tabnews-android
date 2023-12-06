@@ -49,9 +49,11 @@ fun NewTabsScreen(
         ) {
           Text(
             text = "Não foi possível carregar os posts",
-            style = Typography.titleLarge
+            style = Typography.titleMedium
           )
-          TextButton(onClick = { } ) {
+          TextButton(onClick = {
+            viewModel.loadUiState()
+          } ) {
             Text(text = "Recarregar posts")
           }
         }

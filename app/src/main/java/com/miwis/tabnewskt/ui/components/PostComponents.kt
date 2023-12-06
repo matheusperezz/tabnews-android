@@ -1,5 +1,8 @@
 package com.miwis.tabnewskt.ui.components
 
+import android.content.Context
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.clickable
@@ -17,7 +20,14 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Card
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import com.miwis.tabnewskt.data.models.Post
 import com.miwis.tabnewskt.data.utils.convertDateToString
@@ -90,4 +100,36 @@ fun PostItem(
     }
 
   }
+}
+
+@Composable
+fun InternetConnection(
+  content: @Composable () -> Unit
+) {
+  var isInternetAvailable by remember { mutableStateOf(false) }
+  val context = LocalContext.current
+
+  DisposableEffect(Unit) {
+    isInternetAvailable = isInternetConnected(context)
+    onDispose {  }
+  }
+  
+  if (isInternetAvailable){
+    content()
+  } else {
+    Column(
+      verticalArrangement = Arrangement.Center,
+      horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+      Text(text = "Sem conexão")
+    }
+  }
+}
+
+fun isInternetConnected(context: Context): Boolean {
+  val connectivityManager =
+    context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+  val network = connectivityManager.activeNetwork
+  val networkCapabilities = connectivityManager.getNetworkCapabilities(network)
+  return networkCapabilities?.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET) == true
 }

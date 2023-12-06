@@ -41,7 +41,7 @@ class NewTabsViewModel @Inject constructor(
     loadUiState()
   }
 
-  private fun loadUiState(){
+  fun loadUiState(){
     currentUiState?.cancel()
     currentUiState = viewModelScope.launch {
       fetchNews()
@@ -59,6 +59,11 @@ class NewTabsViewModel @Inject constructor(
   }
 
   private suspend fun fetchNews(): Flow<List<Post>> {
-    return flowOf(service.fetchNewPosts())
+    return try {
+      flowOf(service.fetchFirstRelevants())
+    } catch (e: Exception) {
+      _uiState.update { NewsUiState.Empty }
+      flowOf(emptyList())
+    }
   }
 }

@@ -39,7 +39,7 @@ class RelevantTabsViewModel @Inject constructor(
     loadUiState()
   }
 
-  private fun loadUiState(){
+  fun loadUiState(){
     currentUiStateJob?.cancel()
     currentUiStateJob = viewModelScope.launch {
       fetchTabs()
@@ -57,7 +57,13 @@ class RelevantTabsViewModel @Inject constructor(
   }
 
   private suspend fun fetchTabs(): Flow<List<Post>> {
-    return flowOf(service.fetchFirstRelevants())
+    return try {
+      flowOf(service.fetchFirstRelevants())
+    } catch (e: Exception) {
+      // Aqui você pode tratar o erro de falta de conectividade
+      _uiState.update { RelevantUiState.Empty }
+      flowOf(emptyList())
+    }
   }
 
 }
