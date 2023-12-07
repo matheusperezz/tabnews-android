@@ -16,6 +16,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.miwis.tabnewskt.data.models.Post
+import com.miwis.tabnewskt.ui.components.NoConnectionFoundBox
 import com.miwis.tabnewskt.ui.components.PostList
 import com.miwis.tabnewskt.ui.theme.Typography
 import com.miwis.tabnewskt.ui.viewmodels.NewTabsViewModel
@@ -39,24 +40,8 @@ fun NewTabsScreen(
     }
 
     is NewsUiState.Empty -> {
-      Box(
-        Modifier.fillMaxSize()
-      ) {
-        Column(
-          Modifier.align(Alignment.Center),
-          horizontalAlignment = Alignment.CenterHorizontally,
-          verticalArrangement = Arrangement.Center
-        ) {
-          Text(
-            text = "Não foi possível carregar os posts",
-            style = Typography.titleMedium
-          )
-          TextButton(onClick = {
-            viewModel.loadUiState()
-          } ) {
-            Text(text = "Recarregar posts")
-          }
-        }
+      NoConnectionFoundBox {
+        viewModel.loadUiState()
       }
     }
 

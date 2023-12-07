@@ -1,7 +1,10 @@
 package com.miwis.tabnewskt.ui.components
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
@@ -15,6 +18,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
@@ -32,6 +36,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.miwis.tabnewskt.R
+import com.miwis.tabnewskt.ui.theme.Typography
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -107,6 +112,31 @@ fun TopBarDropDownMenu(
         }
       )
 
+    }
+  }
+}
+
+@Composable
+fun NoConnectionFoundBox(
+  onReloadClick: () -> Unit = {}
+) {
+  Box(
+    Modifier.fillMaxSize()
+  ) {
+    Column(
+      Modifier.align(Alignment.Center),
+      horizontalAlignment = Alignment.CenterHorizontally,
+      verticalArrangement = Arrangement.Center
+    ) {
+      Text(
+        text = "Não foi possível carregar os posts",
+        style = Typography.titleMedium
+      )
+      TextButton(onClick = {
+        onReloadClick()
+      } ) {
+        Text(text = "Recarregar posts")
+      }
     }
   }
 }
