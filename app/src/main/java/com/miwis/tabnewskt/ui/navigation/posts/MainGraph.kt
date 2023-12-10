@@ -38,10 +38,6 @@ fun NavController.navigateSingleTopWithPopUpTo(
       newTabsRoute,
       ::navigateToNewsTabs
     )
-    BottomAppBarItem.Settings -> Pair(
-      settingsRoute,
-      ::navigateToSettings
-    )
   }
 
   val navOptions = navOptions {

@@ -29,6 +29,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.miwis.tabnewskt.data.services.PostService
+import com.miwis.tabnewskt.ui.components.BottomBarNavigation
 import com.miwis.tabnewskt.ui.components.TabnewsKtFab
 import com.miwis.tabnewskt.ui.components.TabnewsKtTopBar
 import com.miwis.tabnewskt.ui.navigation.TabnewsNavHost
@@ -118,34 +119,7 @@ fun TabnewsKtApp(
   Scaffold(
     bottomBar = {
       if(isShowBottomBar){
-        NavigationBar {
-          bottomAppBarItems.forEach { screen ->
-            val isSelected =
-              currentDestination?.hierarchy?.any { it.route == screen.route } == true
-            val icon = screen.icon
-            NavigationBarItem(
-              selected = isSelected,
-              onClick = {
-                navController.navigate(screen.route) {
-                  popUpTo(navController.graph.findStartDestination().id) {
-                    saveState = true
-                  }
-                  launchSingleTop = true
-                  restoreState = true
-                }
-              },
-              icon = {
-                Icon(
-                  imageVector = icon,
-                  contentDescription = null
-                )
-              },
-              label = {
-                Text(text = screen.label)
-              }
-            )
-          }
-        }
+        BottomBarNavigation(currentDestination, navController)
       }
     },
     topBar = {
@@ -179,3 +153,4 @@ fun TabnewsKtApp(
     }
   }
 }
+

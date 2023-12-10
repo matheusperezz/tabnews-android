@@ -17,6 +17,8 @@ import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.NavigationBar
+import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
@@ -35,7 +37,12 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavDestination
+import androidx.navigation.NavDestination.Companion.hierarchy
+import androidx.navigation.NavGraph.Companion.findStartDestination
+import androidx.navigation.NavHostController
 import com.miwis.tabnewskt.R
+import com.miwis.tabnewskt.ui.navigation.posts.bottomAppBarItems
 import com.miwis.tabnewskt.ui.theme.Typography
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -134,7 +141,7 @@ fun NoConnectionFoundBox(
       )
       TextButton(onClick = {
         onReloadClick()
-      } ) {
+      }) {
         Text(text = "Recarregar posts")
       }
     }
@@ -153,6 +160,42 @@ fun TabnewsKtFab(
     Text(text = text)
   }
 }
+
+@Composable
+fun BottomBarNavigation(
+  currentDestination: NavDestination?,
+  navController: NavHostController
+) {
+  NavigationBar {
+    bottomAppBarItems.forEach { screen ->
+      val isSelected =
+        currentDestination?.hierarchy?.any { it.route == screen.route } == true
+      val icon = screen.icon
+      NavigationBarItem(
+        selected = isSelected,
+        onClick = {
+          navController.navigate(screen.route) {
+            popUpTo(navController.graph.findStartDestination().id) {
+              saveState = true
+            }
+            launchSingleTop = true
+            restoreState = true
+          }
+        },
+        icon = {
+          Icon(
+            imageVector = icon,
+            contentDescription = null
+          )
+        },
+        label = {
+          Text(text = screen.label)
+        }
+      )
+    }
+  }
+}
+
 
 @Preview
 @Composable

@@ -23,15 +23,9 @@ sealed class BottomAppBarItem(
     route = newTabsRoute
   )
 
-  object Settings : BottomAppBarItem(
-    label = "Configurações",
-    icon = Icons.Filled.Settings,
-    route = settingsRoute
-  )
 }
 
 val bottomAppBarItems = listOf(
   BottomAppBarItem.Relevants,
   BottomAppBarItem.News,
-  BottomAppBarItem.Settings
 )
