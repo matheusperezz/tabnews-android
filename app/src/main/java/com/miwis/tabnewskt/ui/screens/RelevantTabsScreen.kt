@@ -2,29 +2,20 @@ package com.miwis.tabnewskt.ui.screens
 
 import android.os.Build
 import androidx.annotation.RequiresApi
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.miwis.tabnewskt.data.models.Post
-import com.miwis.tabnewskt.ui.components.InternetConnection
+import com.miwis.tabnewskt.domain.models.Post
 import com.miwis.tabnewskt.ui.components.NoConnectionFoundBox
 import com.miwis.tabnewskt.ui.components.PostList
-import com.miwis.tabnewskt.ui.theme.Typography
 import com.miwis.tabnewskt.ui.viewmodels.RelevantTabsViewModel
 import com.miwis.tabnewskt.ui.viewmodels.RelevantUiState
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.launch
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable

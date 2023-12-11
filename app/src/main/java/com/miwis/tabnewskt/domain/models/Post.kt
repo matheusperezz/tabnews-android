@@ -1,4 +1,4 @@
-package com.miwis.tabnewskt.data.models
+package com.miwis.tabnewskt.domain.models
 
 data class Post(
   val id: String,

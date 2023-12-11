@@ -1,7 +1,7 @@
 package com.miwis.tabnewskt.data.services
 
-import com.miwis.tabnewskt.data.models.Post
-import com.miwis.tabnewskt.data.models.PostDetails
+import com.miwis.tabnewskt.domain.models.Post
+import com.miwis.tabnewskt.domain.models.PostDetails
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query

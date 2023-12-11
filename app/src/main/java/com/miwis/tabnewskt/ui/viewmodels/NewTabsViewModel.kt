@@ -2,7 +2,7 @@ package com.miwis.tabnewskt.ui.viewmodels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.miwis.tabnewskt.data.models.Post
+import com.miwis.tabnewskt.domain.models.Post
 import com.miwis.tabnewskt.data.services.PostService
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
