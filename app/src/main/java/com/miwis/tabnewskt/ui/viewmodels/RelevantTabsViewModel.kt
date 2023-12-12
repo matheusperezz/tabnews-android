@@ -3,7 +3,7 @@ package com.miwis.tabnewskt.ui.viewmodels
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.miwis.tabnewskt.domain.models.Post
-import com.miwis.tabnewskt.data.services.PostService
+import com.miwis.tabnewskt.domain.repositories.PostRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.Flow
@@ -25,7 +25,7 @@ sealed class RelevantUiState {
 }
 @HiltViewModel
 class RelevantTabsViewModel @Inject constructor(
-  private val service: PostService
+  private val repository: PostRepository
 ) : ViewModel() {
 
   private var currentUiStateJob: Job? = null
@@ -57,7 +57,7 @@ class RelevantTabsViewModel @Inject constructor(
 
   private suspend fun fetchTabs(): Flow<List<Post>> {
     return try {
-      flowOf(service.fetchFirstRelevants())
+      repository.fetchFirstRelevants()
     } catch (e: Exception) {
       // Aqui você pode tratar o erro de falta de conectividade
       _uiState.update { RelevantUiState.Empty }

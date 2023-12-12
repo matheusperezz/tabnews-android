@@ -2,6 +2,8 @@ package com.miwis.tabnewskt.data.di.modules
 
 import com.miwis.tabnewskt.data.network.DateAdapter
 import com.miwis.tabnewskt.data.services.PostService
+import com.miwis.tabnewskt.domain.repositories.PostRepository
+import com.miwis.tabnewskt.domain.repositories.PostRepositoryImpl
 import com.squareup.moshi.Moshi
 import dagger.Module
 import dagger.Provides
@@ -34,6 +36,11 @@ object TabnewsApiModule {
   @Singleton
   fun providePostService(retrofit: Retrofit): PostService {
     return retrofit.create(PostService::class.java)
+  }
+
+  @Provides
+  fun providePostRepository(service: PostService): PostRepository {
+    return PostRepositoryImpl(service)
   }
 
 }
