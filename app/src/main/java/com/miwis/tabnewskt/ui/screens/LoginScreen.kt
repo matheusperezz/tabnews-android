@@ -4,7 +4,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Email
@@ -12,9 +11,9 @@ import androidx.compose.material.icons.outlined.Lock
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
-import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -30,14 +29,14 @@ import com.miwis.tabnewskt.ui.theme.Typography
 @Composable
 fun LoginScreen(
   onEnterClick: () -> Unit = {},
-  onRegistryClick: () -> Unit = {}
+  onForgotPasswordClick: () -> Unit = {}
 ) {
   var email by remember { mutableStateOf("") }
   var password by remember { mutableStateOf("") }
 
   Column(
     verticalArrangement = Arrangement.spacedBy(
-      space = 16.dp,
+      space = 12.dp,
       alignment = Alignment.CenterVertically
     ),
     horizontalAlignment = Alignment.CenterHorizontally,
@@ -83,10 +82,12 @@ fun LoginScreen(
       Text(text = "Entrar")
     }
 
-    OutlinedButton(onClick = { onRegistryClick() }, modifier = Modifier.fillMaxWidth()) {
-      Text(text = "Registrar-se")
+    TextButton(onClick = { onForgotPasswordClick() }, modifier = Modifier.fillMaxWidth()) {
+      Text(text = "Esqueci a minha senha")
     }
+
   }
+
 }
 
 @Preview(showBackground = true, showSystemUi = true)
