@@ -1,7 +1,10 @@
 package com.miwis.tabnewskt
 
 import android.os.Build
+import android.os.Build.VERSION_CODES
 import android.os.Bundle
+import android.view.View
+import android.view.WindowManager
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.annotation.RequiresApi
@@ -60,9 +63,6 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
-  @Inject
-  lateinit var service: PostService
-
   @RequiresApi(Build.VERSION_CODES.O)
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -76,17 +76,17 @@ class MainActivity : ComponentActivity() {
 
           val currentRoute = currentDestination?.route
 
-          val isShowBottomBar = when (currentRoute){
+          val isShowBottomBar = when (currentRoute) {
             relevantTabsListRoute, newTabsRoute, settingsRoute, postDetailsRoute -> true
             else -> false
           }
 
-          val isShowTopBar = when (currentRoute){
+          val isShowTopBar = when (currentRoute) {
             loginRoute -> false
             else -> true
           }
 
-          val isShowFab = when(currentRoute){
+          val isShowFab = when (currentRoute) {
             loginRoute, newPostRoute -> false
             else -> true
           }
@@ -118,12 +118,12 @@ fun TabnewsKtApp(
 ) {
   Scaffold(
     bottomBar = {
-      if(isShowBottomBar){
+      if (isShowBottomBar) {
         BottomBarNavigation(currentDestination, navController)
       }
     },
     topBar = {
-      if (isShowTopBar){
+      if (isShowTopBar) {
         TabnewsKtTopBar(
           onBackButtonClick = {
             navController.popBackStack()
@@ -138,16 +138,17 @@ fun TabnewsKtApp(
       }
     },
     floatingActionButton = {
-      if (isShowFab){
+      if (isShowFab) {
         TabnewsKtFab(text = "Criar post", icon = Icons.Filled.Add, onClick = {
           navController.navigateToNewPost()
         })
       }
     }
   ) {
-    Box(modifier = Modifier
-      .padding(it)
-      .padding(horizontal = 8.dp)
+    Box(
+      modifier = Modifier
+        .padding(it)
+        .padding(horizontal = 8.dp)
     ) {
       content()
     }

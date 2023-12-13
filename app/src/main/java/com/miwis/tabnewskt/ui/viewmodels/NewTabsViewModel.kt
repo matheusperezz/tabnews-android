@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.miwis.tabnewskt.domain.models.Post
 import com.miwis.tabnewskt.data.services.PostService
+import com.miwis.tabnewskt.domain.repositories.PostRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.Flow
@@ -29,7 +30,7 @@ sealed class NewsUiState {
 
 @HiltViewModel
 class NewTabsViewModel @Inject constructor(
-  private val service: PostService
+  private val repository: PostRepository
 ) : ViewModel() {
   private var currentUiState: Job? = null
   private val _uiState = MutableStateFlow<NewsUiState>(
@@ -60,7 +61,7 @@ class NewTabsViewModel @Inject constructor(
 
   private suspend fun fetchNews(): Flow<List<Post>> {
     return try {
-      flowOf(service.fetchFirstRelevants())
+      repository.fetchNewPosts()
     } catch (e: Exception) {
       _uiState.update { NewsUiState.Empty }
       flowOf(emptyList())

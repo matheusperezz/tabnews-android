@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.miwis.tabnewskt.domain.models.PostDetails
 import com.miwis.tabnewskt.data.services.PostService
+import com.miwis.tabnewskt.domain.repositories.PostRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -22,7 +23,7 @@ sealed class PostDetailsState {
 
 @HiltViewModel
 class PostDetailsViewModel@Inject constructor(
-  private val service: PostService
+  private val repository: PostRepository
 ) : ViewModel() {
 
   private val _uiState = MutableStateFlow<PostDetailsState>(PostDetailsState.Loading)
@@ -32,7 +33,7 @@ class PostDetailsViewModel@Inject constructor(
     viewModelScope.launch {
       _uiState.value = PostDetailsState.Loading
       try {
-        val details = service.fetchPostFromUser(postOwner, postSlug)
+        val details = repository.fetchPostFromUser(postOwner, postSlug)
         _uiState.value = PostDetailsState.Success(details)
       } catch (e: Exception) {
         _uiState.value = PostDetailsState.Error("Erro ao carregar post")
