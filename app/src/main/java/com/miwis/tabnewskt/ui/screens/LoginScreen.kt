@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Email
 import androidx.compose.material.icons.outlined.Lock
@@ -15,24 +16,30 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.miwis.tabnewskt.ui.theme.Typography
+import com.miwis.tabnewskt.ui.viewmodels.LoginViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LoginScreen(
+  viewModel: LoginViewModel = hiltViewModel(),
   onEnterClick: () -> Unit = {},
   onForgotPasswordClick: () -> Unit = {}
 ) {
-  var email by remember { mutableStateOf("") }
-  var password by remember { mutableStateOf("") }
+
+  val uiState by viewModel.uiState.collectAsState()
 
   Column(
     verticalArrangement = Arrangement.spacedBy(
@@ -51,10 +58,8 @@ fun LoginScreen(
     )
 
     OutlinedTextField(
-      value = email,
-      onValueChange = {
-        email = it
-      },
+      value = uiState.email,
+      onValueChange = uiState.onEmailChange,
       label = {
         Text(text = "E-mail")
       },
@@ -65,16 +70,16 @@ fun LoginScreen(
     )
 
     OutlinedTextField(
-      value = password,
-      onValueChange = {
-        password = it
-      },
+      value = uiState.password,
+      onValueChange = uiState.onPasswordChange,
       label = {
         Text(text = "Senha")
       },
       leadingIcon = {
         Icon(Icons.Outlined.Lock, null)
       },
+      visualTransformation = PasswordVisualTransformation(),
+      keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
       modifier = Modifier.fillMaxWidth()
     )
 
