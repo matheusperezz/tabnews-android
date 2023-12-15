@@ -57,7 +57,6 @@ import javax.inject.Inject
  *  TODO: Implementar os comentários de cada post
  *  TODO: Implementar login?
  *
- *  TODO: FIX: O app não abre sem internet
  * **/
 
 @AndroidEntryPoint
