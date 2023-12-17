@@ -83,7 +83,10 @@ fun LoginScreen(
       modifier = Modifier.fillMaxWidth()
     )
 
-    Button(onClick = { onEnterClick() }, modifier = Modifier.fillMaxWidth()) {
+    Button(onClick = {
+      onEnterClick()
+      viewModel.tryLogin(uiState.email, uiState.password)
+    }, modifier = Modifier.fillMaxWidth()) {
       Text(text = "Entrar")
     }
 
