@@ -54,7 +54,6 @@ import javax.inject.Inject
 /**
  *  Próximos passos:
  *
- *  TODO: Login funcionando, porém quando da errado, o app crasha, tratar este erro!
  *  TODO: Implementar os comentários de cada post
  *
  * **/

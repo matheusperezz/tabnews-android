@@ -13,7 +13,7 @@ const val loginRoute = "login"
 fun NavGraphBuilder.loginScreen(navController: NavHostController){
   composable(loginRoute) {
     LoginScreen(
-      onEnterClick = {
+      onSucessNavigate = {
         navController.navigateToMainGraph()
       }
     )

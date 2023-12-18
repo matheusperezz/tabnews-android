@@ -1,6 +1,5 @@
 package com.miwis.tabnewskt.ui.viewmodels
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.miwis.tabnewskt.domain.models.LoginAuthenticationModel
@@ -8,18 +7,30 @@ import com.miwis.tabnewskt.domain.repositories.AuthRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import retrofit2.HttpException
 import javax.inject.Inject
 
 data class LoginFormUiState(
   val email: String = "",
   val password: String = "",
   val onEmailChange: (String) -> Unit = {},
-  val onPasswordChange: (String) -> Unit = {}
+  val onPasswordChange: (String) -> Unit = {},
+  val loginStatus: LoginStatus = LoginStatus.IDLE,
+  val emailError: String = "",
+  val passwordError: String = ""
 )
+
+enum class LoginStatus {
+  IDLE,
+  LOADING,
+  SUCCESS,
+  ERROR,
+  NO_INTERNET
+}
+
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(
@@ -54,11 +65,43 @@ class LoginViewModel @Inject constructor(
     password: String
   ) {
     viewModelScope.launch {
-      val user = LoginAuthenticationModel(email, password)
-      val response = repository.tryLogin(user)
-      response.collect {
-        Log.i("Trying Login", "tryLogin: ${it.message} ${it.id}")
+      try {
+        val user = LoginAuthenticationModel(email, password)
+        repository.tryLogin(user)
+          .onStart {
+            _uiState.update { it.copy(loginStatus = LoginStatus.LOADING) }
+          }
+          .collect {
+            _uiState.update { it.copy(loginStatus = LoginStatus.SUCCESS) }
+          }
+      } catch (e: HttpException) {
+        // Trate o erro aqui, por exemplo:
+        if (e.code() == 400) {
+          // Handle HTTP 400 Bad Request
+          _uiState.update {
+            it.copy(
+              loginStatus = LoginStatus.ERROR,
+              emailError = "E-mail inválido",
+              passwordError = "Senha inválida"
+            )
+          }
+        } else {
+          // Handle outros códigos de erro HTTP, se necessário
+          _uiState.update { it.copy(loginStatus = LoginStatus.ERROR) }
+        }
       }
+    }
+  }
+
+  fun resetCredentials() {
+    _uiState.update {
+      it.copy(
+        passwordError = "",
+        emailError = "",
+        email = "",
+        password = "",
+        loginStatus = LoginStatus.LOADING
+      )
     }
   }
 
