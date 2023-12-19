@@ -6,7 +6,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
-import com.miwis.tabnewskt.ui.screens.PostDetailsScreen
+import com.miwis.tabnewskt.ui.screens.posts.PostDetailsScreen
 
 const val postDetailsRoute = "postDetails"
 const val postIdArgument = "id"

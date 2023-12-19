@@ -3,7 +3,6 @@ package com.miwis.tabnewskt.ui.viewmodels
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.miwis.tabnewskt.domain.models.Post
-import com.miwis.tabnewskt.data.services.PostService
 import com.miwis.tabnewskt.domain.repositories.PostRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
@@ -16,25 +15,22 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-sealed class NewsUiState {
-
-  object Loading : NewsUiState()
-
-  object Empty : NewsUiState()
-
+sealed class RelevantUiState {
+  object Loading: RelevantUiState()
+  object Empty: RelevantUiState()
   data class Sucess(
     val posts: List<Post> = emptyList()
-  ) : NewsUiState()
+  ): RelevantUiState()
 
 }
-
 @HiltViewModel
-class NewTabsViewModel @Inject constructor(
+class RelevantPostViewModel @Inject constructor(
   private val repository: PostRepository
 ) : ViewModel() {
-  private var currentUiState: Job? = null
-  private val _uiState = MutableStateFlow<NewsUiState>(
-    NewsUiState.Loading
+
+  private var currentUiStateJob: Job? = null
+  private val _uiState = MutableStateFlow<RelevantUiState>(
+    RelevantUiState.Loading
   )
   val uiState = _uiState.asStateFlow()
 
@@ -43,28 +39,30 @@ class NewTabsViewModel @Inject constructor(
   }
 
   fun loadUiState(){
-    currentUiState?.cancel()
-    currentUiState = viewModelScope.launch {
-      fetchNews()
+    currentUiStateJob?.cancel()
+    currentUiStateJob = viewModelScope.launch {
+      fetchTabs()
         .onStart {
-          _uiState.update { NewsUiState.Loading }
+          _uiState.update { RelevantUiState.Loading }
         }
-        .collect { posts->
-          if (posts.isEmpty()){
-            _uiState.update { NewsUiState.Empty }
+        .collect { posts ->
+          if (posts.isEmpty()) {
+            _uiState.update { RelevantUiState.Empty }
           } else {
-            _uiState.update { NewsUiState.Sucess(posts) }
+            _uiState.update { RelevantUiState.Sucess(posts) }
           }
         }
     }
   }
 
-  private suspend fun fetchNews(): Flow<List<Post>> {
+  private suspend fun fetchTabs(): Flow<List<Post>> {
     return try {
-      repository.fetchNewPosts()
+      repository.fetchFirstRelevants()
     } catch (e: Exception) {
-      _uiState.update { NewsUiState.Empty }
+      // Aqui você pode tratar o erro de falta de conectividade
+      _uiState.update { RelevantUiState.Empty }
       flowOf(emptyList())
     }
   }
+
 }

@@ -7,6 +7,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.navOptions
 import androidx.navigation.navigation
+import com.miwis.tabnewskt.ui.navigation.settings.settingsScreen
 
 internal const val mainGraphRoute = "mainGraph"
 

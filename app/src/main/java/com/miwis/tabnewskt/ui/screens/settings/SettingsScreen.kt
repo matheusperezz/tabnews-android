@@ -1,4 +1,4 @@
-package com.miwis.tabnewskt.ui.screens
+package com.miwis.tabnewskt.ui.screens.settings
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material3.Text

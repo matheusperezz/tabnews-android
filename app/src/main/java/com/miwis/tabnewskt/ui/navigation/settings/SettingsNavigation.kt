@@ -1,11 +1,11 @@
-package com.miwis.tabnewskt.ui.navigation.posts
+package com.miwis.tabnewskt.ui.navigation.settings
 
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
-import com.miwis.tabnewskt.ui.screens.SettingsScreen
+import com.miwis.tabnewskt.ui.screens.settings.SettingsScreen
 
 const val settingsRoute = "settings"
 

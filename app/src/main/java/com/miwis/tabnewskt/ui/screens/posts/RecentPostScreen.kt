@@ -1,4 +1,4 @@
-package com.miwis.tabnewskt.ui.screens
+package com.miwis.tabnewskt.ui.screens.posts
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -13,9 +13,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.ImeAction
@@ -23,12 +20,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.miwis.tabnewskt.ui.theme.Typography
-import com.miwis.tabnewskt.ui.viewmodels.NewPostViewModel
+import com.miwis.tabnewskt.ui.viewmodels.CreatePostViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun NewPostScreen(
-  viewModel: NewPostViewModel = hiltViewModel()
+fun RecentPostScreen(
+  viewModel: CreatePostViewModel = hiltViewModel()
 ) {
 
   val uiState by viewModel.uiState.collectAsState()
@@ -75,5 +72,5 @@ fun NewPostScreen(
 @Preview(showBackground = true)
 @Composable
 fun NewPostScreenPreview() {
-  NewPostScreen()
+  RecentPostScreen()
 }

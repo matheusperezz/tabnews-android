@@ -17,7 +17,7 @@ data class NewPostFormUiState(
 )
 
 @HiltViewModel
-class NewPostViewModel @Inject constructor() : ViewModel(){
+class CreatePostViewModel @Inject constructor() : ViewModel(){
   private val _uiState: MutableStateFlow<NewPostFormUiState> = MutableStateFlow(
     NewPostFormUiState()
   )

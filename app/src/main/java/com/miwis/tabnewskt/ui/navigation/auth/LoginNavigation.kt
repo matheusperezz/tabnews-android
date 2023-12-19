@@ -6,7 +6,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
 import com.miwis.tabnewskt.ui.navigation.posts.navigateToMainGraph
-import com.miwis.tabnewskt.ui.screens.LoginScreen
+import com.miwis.tabnewskt.ui.screens.auth.LoginScreen
 
 const val loginRoute = "login"
 

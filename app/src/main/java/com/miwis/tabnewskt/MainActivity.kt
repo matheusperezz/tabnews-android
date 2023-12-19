@@ -1,10 +1,7 @@
 package com.miwis.tabnewskt
 
 import android.os.Build
-import android.os.Build.VERSION_CODES
 import android.os.Bundle
-import android.view.View
-import android.view.WindowManager
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.annotation.RequiresApi
@@ -14,46 +11,37 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.NavigationBar
-import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavDestination
-import androidx.navigation.NavDestination.Companion.hierarchy
-import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.miwis.tabnewskt.data.services.PostService
 import com.miwis.tabnewskt.ui.components.BottomBarNavigation
 import com.miwis.tabnewskt.ui.components.TabnewsKtFab
 import com.miwis.tabnewskt.ui.components.TabnewsKtTopBar
 import com.miwis.tabnewskt.ui.navigation.TabnewsNavHost
-import com.miwis.tabnewskt.ui.navigation.auth.authenticationGraphRoute
 import com.miwis.tabnewskt.ui.navigation.auth.loginRoute
 import com.miwis.tabnewskt.ui.navigation.auth.navigateToAuthenticationGraph
-import com.miwis.tabnewskt.ui.navigation.posts.bottomAppBarItems
 import com.miwis.tabnewskt.ui.navigation.posts.navigateToNewPost
-import com.miwis.tabnewskt.ui.navigation.posts.navigateToSettings
+import com.miwis.tabnewskt.ui.navigation.settings.navigateToSettings
 import com.miwis.tabnewskt.ui.navigation.posts.newPostRoute
 import com.miwis.tabnewskt.ui.navigation.posts.newTabsRoute
 import com.miwis.tabnewskt.ui.navigation.posts.postDetailsRoute
 import com.miwis.tabnewskt.ui.navigation.posts.relevantTabsListRoute
-import com.miwis.tabnewskt.ui.navigation.posts.settingsRoute
+import com.miwis.tabnewskt.ui.navigation.settings.settingsRoute
 import com.miwis.tabnewskt.ui.theme.TabnewsKtTheme
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
 /**
  *  Próximos passos:
  *
+ *  TODO: Melhorar a implementação da tela de login
  *  TODO: Implementar os comentários de cada post
  *
  * **/

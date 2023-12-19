@@ -1,4 +1,4 @@
-package com.miwis.tabnewskt.ui.screens
+package com.miwis.tabnewskt.ui.screens.posts
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Column

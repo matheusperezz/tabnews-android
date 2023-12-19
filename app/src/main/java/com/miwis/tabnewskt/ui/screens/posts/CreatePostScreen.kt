@@ -1,4 +1,4 @@
-package com.miwis.tabnewskt.ui.screens
+package com.miwis.tabnewskt.ui.screens.posts
 
 import android.os.Build
 import androidx.annotation.RequiresApi
@@ -14,20 +14,19 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.miwis.tabnewskt.domain.models.Post
 import com.miwis.tabnewskt.ui.components.NoConnectionFoundBox
 import com.miwis.tabnewskt.ui.components.PostList
-import com.miwis.tabnewskt.ui.viewmodels.RelevantTabsViewModel
-import com.miwis.tabnewskt.ui.viewmodels.RelevantUiState
+import com.miwis.tabnewskt.ui.viewmodels.RecentPostViewModel
+import com.miwis.tabnewskt.ui.viewmodels.NewsUiState
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun RelevantTabsScreen(
-  viewModel: RelevantTabsViewModel = hiltViewModel(),
+fun CreatePostScreen(
+  viewModel: RecentPostViewModel = hiltViewModel(),
   onPostClick: (Post) -> Unit = {}
 ) {
-
   val uiState by viewModel.uiState.collectAsState()
 
   when (uiState) {
-    is RelevantUiState.Loading -> {
+    is NewsUiState.Loading -> {
       Box(Modifier.fillMaxSize()) {
         CircularProgressIndicator(
           Modifier.align(Alignment.Center)
@@ -35,17 +34,18 @@ fun RelevantTabsScreen(
       }
     }
 
-    is RelevantUiState.Empty -> {
+    is NewsUiState.Empty -> {
       NoConnectionFoundBox {
         viewModel.loadUiState()
       }
     }
 
-    is RelevantUiState.Sucess -> {
+    is NewsUiState.Sucess -> {
       PostList(
         onPostClick = onPostClick,
-        posts = (uiState as RelevantUiState.Sucess).posts,
+        posts = (uiState as NewsUiState.Sucess).posts,
       )
     }
+
   }
 }
