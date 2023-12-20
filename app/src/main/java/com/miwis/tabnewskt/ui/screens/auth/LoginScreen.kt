@@ -31,6 +31,7 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.miwis.tabnewskt.ui.theme.Typography
 import com.miwis.tabnewskt.ui.viewmodels.LoginFormUiState
 import com.miwis.tabnewskt.ui.viewmodels.LoginStatus
@@ -45,7 +46,7 @@ fun LoginScreen(
 ) {
 
   // TODO: Melhorar a estrutura
-  val uiState by viewModel.uiState.collectAsState()
+  val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
   when (uiState.loginStatus) {
 

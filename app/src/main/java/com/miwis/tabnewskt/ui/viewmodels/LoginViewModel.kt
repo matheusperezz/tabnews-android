@@ -1,13 +1,16 @@
 package com.miwis.tabnewskt.ui.viewmodels
 
+import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.miwis.tabnewskt.domain.models.LoginAuthenticationModel
 import com.miwis.tabnewskt.domain.repositories.AuthRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.onStart
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
@@ -35,13 +38,17 @@ enum class LoginStatus {
 @HiltViewModel
 class LoginViewModel @Inject constructor(
   private val repository: AuthRepository
-) : ViewModel() {
+) : ViewModel(), DefaultLifecycleObserver {
 
   private val _uiState: MutableStateFlow<LoginFormUiState> = MutableStateFlow(
     LoginFormUiState()
   )
 
-  val uiState = _uiState.asStateFlow()
+  val uiState = _uiState.stateIn(
+    viewModelScope,
+    SharingStarted.Eagerly,
+    initialValue = _uiState.value
+  )
 
   init {
     _uiState.update { currentState ->

@@ -11,6 +11,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.miwis.tabnewskt.domain.models.Post
 import com.miwis.tabnewskt.ui.components.NoConnectionFoundBox
 import com.miwis.tabnewskt.ui.components.PostList
@@ -23,7 +24,7 @@ fun CreatePostScreen(
   viewModel: RecentPostViewModel = hiltViewModel(),
   onPostClick: (Post) -> Unit = {}
 ) {
-  val uiState by viewModel.uiState.collectAsState()
+  val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
   when (uiState) {
     is NewsUiState.Loading -> {
