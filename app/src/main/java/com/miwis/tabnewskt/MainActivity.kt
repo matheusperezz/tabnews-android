@@ -73,7 +73,7 @@ class MainActivity : ComponentActivity() {
           }
 
           val isShowFab = when (currentRoute) {
-            loginRoute, newPostRoute -> false
+            loginRoute, newPostRoute, postDetailsRoute -> false
             else -> true
           }
 
