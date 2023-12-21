@@ -1,8 +1,10 @@
 package com.miwis.tabnewskt.ui.viewmodels
 
+import android.content.Context
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.miwis.tabnewskt.data.utils.isOnline
 import com.miwis.tabnewskt.domain.models.LoginAuthenticationModel
 import com.miwis.tabnewskt.domain.repositories.AuthRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -69,15 +71,14 @@ class LoginViewModel @Inject constructor(
 
   fun tryLogin(
     email: String,
-    password: String
+    password: String,
+    context: Context
   ) {
     viewModelScope.launch {
       try {
         val user = LoginAuthenticationModel(email, password)
+        _uiState.update { it.copy(loginStatus = LoginStatus.LOADING) }
         repository.tryLogin(user)
-          .onStart {
-            _uiState.update { it.copy(loginStatus = LoginStatus.LOADING) }
-          }
           .collect {
             _uiState.update { it.copy(loginStatus = LoginStatus.SUCCESS) }
           }
@@ -94,10 +95,11 @@ class LoginViewModel @Inject constructor(
           }
         } else {
           // Handle outros códigos de erro HTTP, se necessário
-          _uiState.update { it.copy(loginStatus = LoginStatus.ERROR) }
+          _uiState.update { it.copy(loginStatus = LoginStatus.NO_INTERNET) }
         }
       }
     }
+
   }
 
   fun resetCredentials() {

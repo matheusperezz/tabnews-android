@@ -125,7 +125,9 @@ fun TopBarDropDownMenu(
 
 @Composable
 fun NoConnectionFoundBox(
-  onReloadClick: () -> Unit = {}
+  text: String = "Não foi possível carregar os posts",
+  textButton: String = "Recarregar posts",
+  onReloadClick: () -> Unit = {},
 ) {
   Box(
     Modifier.fillMaxSize()
@@ -136,13 +138,13 @@ fun NoConnectionFoundBox(
       verticalArrangement = Arrangement.Center
     ) {
       Text(
-        text = "Não foi possível carregar os posts",
+        text = text,
         style = Typography.titleMedium
       )
       TextButton(onClick = {
         onReloadClick()
       }) {
-        Text(text = "Recarregar posts")
+        Text(text = textButton)
       }
     }
   }

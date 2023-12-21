@@ -2,27 +2,13 @@ package com.miwis.tabnewskt.ui.screens.auth
 
 import android.annotation.SuppressLint
 import android.widget.Toast
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Email
 import androidx.compose.material.icons.outlined.Lock
-import androidx.compose.material3.Button
-import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -32,11 +18,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.miwis.tabnewskt.ui.components.NoConnectionFoundBox
 import com.miwis.tabnewskt.ui.theme.Typography
 import com.miwis.tabnewskt.ui.viewmodels.LoginFormUiState
 import com.miwis.tabnewskt.ui.viewmodels.LoginStatus
 import com.miwis.tabnewskt.ui.viewmodels.LoginViewModel
-import kotlinx.coroutines.CoroutineScope
 
 @Composable
 fun LoginScreen(
@@ -44,34 +30,14 @@ fun LoginScreen(
   onForgotPasswordClick: () -> Unit = {},
   onSucessNavigate: () -> Unit = {}
 ) {
-
-  // TODO: Melhorar a estrutura
   val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
   when (uiState.loginStatus) {
-
-    LoginStatus.SUCCESS -> {
-      onSucessNavigate()
-    }
-
-    LoginStatus.LOADING -> {
-      Box(Modifier.fillMaxSize()) {
-        CircularProgressIndicator(
-          Modifier.align(Alignment.Center)
-        )
-      }
-    }
-
-    else -> {
-      LoginForm(
-        uiState = uiState,
-        viewModel = viewModel,
-        onForgotPasswordClick = onForgotPasswordClick
-      )
-    }
-
+    LoginStatus.SUCCESS -> onSucessNavigate()
+    LoginStatus.LOADING -> LoadingScreen()
+    LoginStatus.NO_INTERNET -> Text(text = "no internet")
+    else -> LoginForm(uiState, viewModel, onForgotPasswordClick)
   }
-
 }
 
 @SuppressLint("CoroutineCreationDuringComposition")
@@ -80,20 +46,16 @@ fun LoginScreen(
 private fun LoginForm(
   uiState: LoginFormUiState,
   viewModel: LoginViewModel,
-  scope: CoroutineScope = rememberCoroutineScope(),
   onForgotPasswordClick: () -> Unit
 ) {
+  val context = LocalContext.current
   Column(
-    verticalArrangement = Arrangement.spacedBy(
-      space = 12.dp,
-      alignment = Alignment.CenterVertically
-    ),
+    verticalArrangement = Arrangement.spacedBy(12.dp),
     horizontalAlignment = Alignment.CenterHorizontally,
     modifier = Modifier
       .fillMaxSize()
-      .padding(16.dp),
+      .padding(16.dp)
   ) {
-
     Text(
       text = "Tabnews KT",
       style = Typography.titleLarge,
@@ -101,54 +63,57 @@ private fun LoginForm(
 
     OutlinedTextField(
       value = uiState.email,
-      onValueChange = {
-        uiState.onEmailChange(it)
-      },
-      label = {
-        Text(text = "E-mail")
-      },
-      leadingIcon = {
-        Icon(Icons.Outlined.Email, null)
-      },
+      onValueChange = { uiState.onEmailChange(it) },
+      label = { Text(text = "E-mail") },
+      leadingIcon = { Icon(Icons.Outlined.Email, null) },
       isError = uiState.emailError.isNotEmpty(),
       singleLine = true,
       modifier = Modifier.fillMaxWidth()
     )
 
-
-
     OutlinedTextField(
       value = uiState.password,
-      onValueChange = {
-        uiState.onPasswordChange(it)
-      },
-      label = {
-        Text(text = "Senha")
-      },
-      leadingIcon = {
-        Icon(Icons.Outlined.Lock, null)
-      },
+      onValueChange = { uiState.onPasswordChange(it) },
+      label = { Text(text = "Senha") },
+      leadingIcon = { Icon(Icons.Outlined.Lock, null) },
       visualTransformation = PasswordVisualTransformation(),
       keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
       modifier = Modifier.fillMaxWidth()
     )
 
-    if (uiState.passwordError.isNotEmpty() or uiState.emailError.isNotEmpty()) {
-      val context = LocalContext.current
-      Toast.makeText(context, "Credenciais inválidas", Toast.LENGTH_LONG).show()
-    }
+    ValidationMessage(uiState)
 
-    Button(onClick = {
-      viewModel.tryLogin(uiState.email, uiState.password)
-      viewModel.resetCredentials()
-    }, modifier = Modifier.fillMaxWidth()) {
+    Button(
+      onClick = {
+        viewModel.tryLogin(uiState.email, uiState.password, context)
+        viewModel.resetCredentials()
+      },
+      modifier = Modifier.fillMaxWidth()
+    ) {
       Text(text = "Entrar")
     }
 
-    TextButton(onClick = { onForgotPasswordClick() }, modifier = Modifier.fillMaxWidth()) {
+    TextButton(
+      onClick = { onForgotPasswordClick() },
+      modifier = Modifier.fillMaxWidth()
+    ) {
       Text(text = "Esqueci a minha senha")
     }
+  }
+}
 
+@Composable
+private fun ValidationMessage(uiState: LoginFormUiState) {
+  if (uiState.loginStatus == LoginStatus.ERROR) {
+    val context = LocalContext.current
+    Toast.makeText(context, "Credenciais inválidas", Toast.LENGTH_LONG).show()
+  }
+}
+
+@Composable
+private fun LoadingScreen() {
+  Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+    CircularProgressIndicator()
   }
 }
 

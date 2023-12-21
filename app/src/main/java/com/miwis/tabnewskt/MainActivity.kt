@@ -41,7 +41,7 @@ import dagger.hilt.android.AndroidEntryPoint
 /**
  *  Próximos passos:
  *
- *  TODO: Melhorar a implementação da tela de login
+ *  TODO: Login sem internet está quebrando o app
  *  TODO: Implementar os comentários de cada post
  *
  * **/
