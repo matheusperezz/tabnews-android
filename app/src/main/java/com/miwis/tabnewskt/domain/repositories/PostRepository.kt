@@ -5,6 +5,7 @@ import com.miwis.tabnewskt.domain.models.Post
 import com.miwis.tabnewskt.domain.models.PostDetails
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
+import retrofit2.http.Path
 
 interface PostRepository {
   suspend fun fetchFirstRelevants(
@@ -23,6 +24,11 @@ interface PostRepository {
     user: String,
     slug: String
   ): PostDetails
+
+  suspend fun fetchChildrensFromPost(
+    user: String,
+    slug: String
+  ): Flow<List<PostDetails>>
 }
 
 class PostRepositoryImpl(
@@ -38,5 +44,9 @@ class PostRepositoryImpl(
 
   override suspend fun fetchPostFromUser(user: String, slug: String): PostDetails {
     return service.fetchPostFromUser(user, slug)
+  }
+
+  override suspend fun fetchChildrensFromPost(user: String, slug: String): Flow<List<PostDetails>> {
+    return flowOf(service.fetchChildrensFromPost(user, slug))
   }
 }

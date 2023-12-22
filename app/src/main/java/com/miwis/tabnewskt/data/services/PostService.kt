@@ -34,4 +34,10 @@ interface PostService {
     @Path("slug") slug: String
   ): PostDetails
 
+  @GET("contents/{user}/{slug}/children")
+  suspend fun fetchChildrensFromPost(
+    @Path("user") user: String,
+    @Path("slug") slug: String
+  ): List<PostDetails>
+
 }

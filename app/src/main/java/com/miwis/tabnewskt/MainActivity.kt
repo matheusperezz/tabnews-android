@@ -41,8 +41,8 @@ import dagger.hilt.android.AndroidEntryPoint
 /**
  *  Próximos passos:
  *
- *  TODO: Login sem internet está quebrando o app
- *  TODO: Implementar os comentários de cada post
+ *  TODO: Melhorar a tela de Comentários
+ *  TODO: Implementar o UPVote e o DownVote
  *
  * **/
 
