@@ -66,7 +66,6 @@ fun PostDetailsScreen(
     is PostDetailsState.Success -> {
       val postDetails = (uiState as PostDetailsState.Success).postDetails
       val childrens = (uiState as PostDetailsState.Success).childrens
-
       PostDetailsAndChildrenList(postDetails = postDetails, childrens = childrens)
     }
 
@@ -79,13 +78,14 @@ fun PostDetailsScreen(
 @Composable
 private fun PostDetailsAndChildrenList(postDetails: PostDetails, childrens: List<PostDetails>) {
   LazyColumn {
+
     item {
       PostBody(postDetails)
 
     }
 
     items(childrens) {
-      Divider(modifier = Modifier.height(8.dp))
+      Spacer(modifier = Modifier.height(8.dp))
       PostChildren(postDetails = it)
     }
   }
