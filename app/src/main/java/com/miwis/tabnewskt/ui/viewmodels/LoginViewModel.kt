@@ -1,17 +1,15 @@
 package com.miwis.tabnewskt.ui.viewmodels
 
 import android.content.Context
+import android.content.SharedPreferences
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.miwis.tabnewskt.data.utils.isOnline
 import com.miwis.tabnewskt.domain.models.LoginAuthenticationModel
 import com.miwis.tabnewskt.domain.repositories.AuthRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -36,6 +34,9 @@ enum class LoginStatus {
   NO_INTERNET
 }
 
+const val PREF_NAME = "LoginPrefs"
+const val KEY_EMAIL = "email"
+const val KEY_PASSWORD = "password"
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(
@@ -102,6 +103,22 @@ class LoginViewModel @Inject constructor(
 
   }
 
+  // TODO: The user cant return from loginscreen, but on open app again, the cache expires
+  fun tryCachedLogin(
+    uiState: LoginFormUiState,
+    context: Context,
+    viewModel: LoginViewModel
+  ) {
+    if (uiState.loginStatus == LoginStatus.IDLE) {
+      val savedEmail = getSavedEmail(context)
+      val savedPassword = getSavedPassword(context)
+
+      if (savedEmail.isNotEmpty() && savedPassword.isNotEmpty()) {
+        viewModel.tryLogin(savedEmail, savedPassword, context)
+      }
+    }
+  }
+
   fun resetCredentials() {
     _uiState.update {
       it.copy(
@@ -113,5 +130,25 @@ class LoginViewModel @Inject constructor(
       )
     }
   }
-
 }
+
+private fun getSharedPreferences(context: Context): SharedPreferences {
+  return context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
+}
+
+private fun getSavedEmail(context: Context): String {
+  return getSharedPreferences(context).getString(KEY_EMAIL, "") ?: ""
+}
+
+private fun getSavedPassword(context: Context): String {
+  return getSharedPreferences(context).getString(KEY_PASSWORD, "") ?: ""
+}
+
+private fun saveCredentials(context: Context, email: String, password: String){
+  val editor = getSharedPreferences(context).edit()
+  editor.putString(KEY_EMAIL, email)
+  editor.putString(KEY_PASSWORD, password)
+  editor.apply()
+}
+
+

@@ -1,6 +1,8 @@
 package com.miwis.tabnewskt.ui.screens.auth
 
 import android.annotation.SuppressLint
+import android.content.Context
+import android.content.SharedPreferences
 import android.widget.Toast
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardOptions
@@ -16,13 +18,18 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.datastore.core.DataStore
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.miwis.tabnewskt.ui.components.NoConnectionFoundBox
 import com.miwis.tabnewskt.ui.theme.Typography
+import com.miwis.tabnewskt.ui.viewmodels.KEY_EMAIL
+import com.miwis.tabnewskt.ui.viewmodels.KEY_PASSWORD
 import com.miwis.tabnewskt.ui.viewmodels.LoginFormUiState
 import com.miwis.tabnewskt.ui.viewmodels.LoginStatus
 import com.miwis.tabnewskt.ui.viewmodels.LoginViewModel
+import com.miwis.tabnewskt.ui.viewmodels.PREF_NAME
+import java.util.prefs.Preferences
 
 @Composable
 fun LoginScreen(
@@ -31,6 +38,11 @@ fun LoginScreen(
   onSucessNavigate: () -> Unit = {}
 ) {
   val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+  val context = LocalContext.current
+
+  LaunchedEffect(key1 = uiState){
+    viewModel.tryCachedLogin(uiState, context, viewModel)
+  }
 
   when (uiState.loginStatus) {
     LoginStatus.SUCCESS -> onSucessNavigate()
@@ -101,6 +113,7 @@ private fun LoginForm(
     }
   }
 }
+
 
 @Composable
 private fun ValidationMessage(uiState: LoginFormUiState) {

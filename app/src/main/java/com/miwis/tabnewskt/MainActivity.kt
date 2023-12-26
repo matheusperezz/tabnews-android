@@ -41,7 +41,7 @@ import dagger.hilt.android.AndroidEntryPoint
 /**
  *  Próximos passos:
  *
- *  TODO: Melhorar a tela de Comentários
+ *  TODO: Login com cache funcionando pela metade
  *  TODO: Implementar o UPVote e o DownVote
  *
  * **/
