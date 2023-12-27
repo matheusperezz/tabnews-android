@@ -23,6 +23,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.miwis.tabnewskt.ui.components.BottomBarNavigation
+import com.miwis.tabnewskt.ui.components.TabnewsKtApp
 import com.miwis.tabnewskt.ui.components.TabnewsKtFab
 import com.miwis.tabnewskt.ui.components.TabnewsKtTopBar
 import com.miwis.tabnewskt.ui.navigation.TabnewsNavHost
@@ -92,52 +93,4 @@ class MainActivity : ComponentActivity() {
   }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun TabnewsKtApp(
-  navController: NavHostController,
-  currentDestination: NavDestination?,
-  isShowBottomBar: Boolean = false,
-  isShowTopBar: Boolean = false,
-  isShowFab: Boolean = false,
-  content: @Composable () -> Unit
-) {
-  Scaffold(
-    bottomBar = {
-      if (isShowBottomBar) {
-        BottomBarNavigation(currentDestination, navController)
-      }
-    },
-    topBar = {
-      if (isShowTopBar) {
-        TabnewsKtTopBar(
-          onBackButtonClick = {
-            navController.popBackStack()
-          },
-          onSettingsClick = {
-            navController.navigateToSettings()
-          },
-          onProfileClick = {
-            navController.navigateToAuthenticationGraph()
-          }
-        )
-      }
-    },
-    floatingActionButton = {
-      if (isShowFab) {
-        TabnewsKtFab(text = "Criar post", icon = Icons.Filled.Add, onClick = {
-          navController.navigateToNewPost()
-        })
-      }
-    }
-  ) {
-    Box(
-      modifier = Modifier
-        .padding(it)
-        .padding(horizontal = 8.dp)
-    ) {
-      content()
-    }
-  }
-}
 
