@@ -5,6 +5,7 @@ import android.content.SharedPreferences
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.miwis.tabnewskt.data.utils.SharedPreferencesManager
 import com.miwis.tabnewskt.domain.models.LoginAuthenticationModel
 import com.miwis.tabnewskt.domain.repositories.AuthRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -75,12 +76,15 @@ class LoginViewModel @Inject constructor(
     password: String,
     context: Context
   ) {
+    val sharedPreferencesManager = SharedPreferencesManager(context)
+
     viewModelScope.launch {
       try {
         val user = LoginAuthenticationModel(email, password)
         _uiState.update { it.copy(loginStatus = LoginStatus.LOADING) }
         repository.tryLogin(user)
           .collect {
+            sharedPreferencesManager.saveLogin("isLogged", "1")
             _uiState.update { it.copy(loginStatus = LoginStatus.SUCCESS) }
           }
       } catch (e: HttpException) {

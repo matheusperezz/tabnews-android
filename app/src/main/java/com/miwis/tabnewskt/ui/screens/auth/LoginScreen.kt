@@ -21,6 +21,7 @@ import androidx.compose.ui.unit.dp
 import androidx.datastore.core.DataStore
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.miwis.tabnewskt.data.utils.SharedPreferencesManager
 import com.miwis.tabnewskt.ui.components.NoConnectionFoundBox
 import com.miwis.tabnewskt.ui.theme.Typography
 import com.miwis.tabnewskt.ui.viewmodels.KEY_EMAIL
@@ -48,7 +49,7 @@ fun LoginScreen(
     LoginStatus.SUCCESS -> onSucessNavigate()
     LoginStatus.LOADING -> LoadingScreen()
     LoginStatus.NO_INTERNET -> Text(text = "no internet")
-    else -> LoginForm(uiState, viewModel, onForgotPasswordClick)
+    else -> LoginForm(uiState, viewModel, onForgotPasswordClick, onSucessNavigate)
   }
 }
 
@@ -58,9 +59,19 @@ fun LoginScreen(
 private fun LoginForm(
   uiState: LoginFormUiState,
   viewModel: LoginViewModel,
-  onForgotPasswordClick: () -> Unit
+  onForgotPasswordClick: () -> Unit = {},
+  onCacheLogin: () -> Unit = {}
 ) {
   val context = LocalContext.current
+  val sharedPreferencesManager = SharedPreferencesManager(context)
+
+  LaunchedEffect(Unit){
+    val isLogged = sharedPreferencesManager.getLoginCache("isLogged") == "1"
+    if (isLogged){
+      onCacheLogin()
+    }
+  }
+
   Column(
     verticalArrangement = Arrangement.spacedBy(12.dp),
     horizontalAlignment = Alignment.CenterHorizontally,
