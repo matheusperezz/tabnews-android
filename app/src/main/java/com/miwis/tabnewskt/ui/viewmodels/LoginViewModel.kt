@@ -107,22 +107,6 @@ class LoginViewModel @Inject constructor(
 
   }
 
-  // TODO: The user cant return from loginscreen, but on open app again, the cache expires
-  fun tryCachedLogin(
-    uiState: LoginFormUiState,
-    context: Context,
-    viewModel: LoginViewModel
-  ) {
-    if (uiState.loginStatus == LoginStatus.IDLE) {
-      val savedEmail = getSavedEmail(context)
-      val savedPassword = getSavedPassword(context)
-
-      if (savedEmail.isNotEmpty() && savedPassword.isNotEmpty()) {
-        viewModel.tryLogin(savedEmail, savedPassword, context)
-      }
-    }
-  }
-
   fun resetCredentials() {
     _uiState.update {
       it.copy(

@@ -39,11 +39,6 @@ fun LoginScreen(
   onSucessNavigate: () -> Unit = {}
 ) {
   val uiState by viewModel.uiState.collectAsStateWithLifecycle()
-  val context = LocalContext.current
-
-  LaunchedEffect(key1 = uiState){
-    viewModel.tryCachedLogin(uiState, context, viewModel)
-  }
 
   when (uiState.loginStatus) {
     LoginStatus.SUCCESS -> onSucessNavigate()

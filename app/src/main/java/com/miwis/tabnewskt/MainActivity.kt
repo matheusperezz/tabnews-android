@@ -43,8 +43,8 @@ import dagger.hilt.android.AndroidEntryPoint
 /**
  *  Próximos passos:
  *
- *  TODO: Login com cache funcionando pela metade
  *  TODO: Implementar o UPVote e o DownVote
+ *  TODO: Implementar o cache nos posts
  *
  * **/
 
