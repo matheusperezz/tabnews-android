@@ -44,7 +44,6 @@ import dagger.hilt.android.AndroidEntryPoint
  *  Próximos passos:
  *
  *  TODO: Up/DownVote implementado, somente layout
- *  TODO: Implementar o cache nos posts
  *
  * **/
 

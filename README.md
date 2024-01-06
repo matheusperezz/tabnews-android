@@ -9,11 +9,16 @@
 - [Hilt][hilt] - Injeção de dependências
 
 📱 As seguintes funções estão disponíveis no momento:
-- Listas os 10 primeiros posts relevantes;
-- Acessar o post (Sem os comentários) com o estilo do markdown.
+- Listas os 10 primeiros posts relevantes ou recentes;
+- Acessar o post com o estilo do markdown;
+- Visualizar todos os comentários de um post junto da pontuação em tabcoins;
+- Logar na sua conta, com sistema de cache de login _(com uma semana de expiração)_;
 
 ## 🎨 Previews
-<img src="https://github.com/matheusperezz/tabnews-android/blob/main/sauce/gif_tabnewskt_1.gif" alt="preview_5" width="500px" />
+<div>
+    <img src="https://github.com/matheusperezz/tabnews-android/blob/main/sauce/gif_tabnewskt_2.gif" alt="preview_5" width="500px" />
+    <img src="https://github.com/matheusperezz/tabnews-android/blob/main/sauce/gif_tabnewskt_3.gif" alt="preview_5" width="500px" />
+</div>
 
 ## 📲 Testar o app
 Aviso: O projeto está em um "pré-alpha", então qualquer bug ou funcionalidade nova que quiser apresentar, basta abrir uma Issue ou fazer uma PR, fique à vontade :)
