@@ -27,7 +27,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import com.miwis.tabnewskt.domain.models.Post
+import com.miwis.tabnewskt.data.models.Post
 import com.miwis.tabnewskt.data.utils.convertDateToString
 import com.miwis.tabnewskt.ui.theme.Typography
 

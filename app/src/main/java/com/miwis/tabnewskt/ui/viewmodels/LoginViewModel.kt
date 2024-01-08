@@ -6,8 +6,8 @@ import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.miwis.tabnewskt.data.utils.SharedPreferencesManager
-import com.miwis.tabnewskt.domain.models.LoginAuthenticationModel
-import com.miwis.tabnewskt.domain.repositories.AuthRepository
+import com.miwis.tabnewskt.data.models.LoginAuthenticationModel
+import com.miwis.tabnewskt.data.repositories.AuthRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted

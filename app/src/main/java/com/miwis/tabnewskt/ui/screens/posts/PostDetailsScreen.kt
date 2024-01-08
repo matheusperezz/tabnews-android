@@ -39,7 +39,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import com.miwis.tabnewskt.R
-import com.miwis.tabnewskt.domain.models.PostDetails
+import com.miwis.tabnewskt.data.models.PostDetails
 import com.miwis.tabnewskt.ui.viewmodels.PostDetailsState
 import com.miwis.tabnewskt.ui.viewmodels.PostDetailsViewModel
 import dev.jeziellago.compose.markdowntext.MarkdownText

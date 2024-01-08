@@ -1,8 +1,8 @@
-package com.miwis.tabnewskt.domain.repositories
+package com.miwis.tabnewskt.data.repositories
 
 import com.miwis.tabnewskt.data.services.AuthService
-import com.miwis.tabnewskt.domain.models.LoginAuthenticationModel
-import com.miwis.tabnewskt.domain.models.LoginAuthenticationResponse
+import com.miwis.tabnewskt.data.models.LoginAuthenticationModel
+import com.miwis.tabnewskt.data.models.LoginAuthenticationResponse
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf

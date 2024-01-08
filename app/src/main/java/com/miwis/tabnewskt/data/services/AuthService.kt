@@ -1,7 +1,7 @@
 package com.miwis.tabnewskt.data.services
 
-import com.miwis.tabnewskt.domain.models.LoginAuthenticationModel
-import com.miwis.tabnewskt.domain.models.LoginAuthenticationResponse
+import com.miwis.tabnewskt.data.models.LoginAuthenticationModel
+import com.miwis.tabnewskt.data.models.LoginAuthenticationResponse
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.flow.Flow
 import retrofit2.http.Body

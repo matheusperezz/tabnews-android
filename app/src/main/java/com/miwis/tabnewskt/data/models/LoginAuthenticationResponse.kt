@@ -1,4 +1,4 @@
-package com.miwis.tabnewskt.domain.models
+package com.miwis.tabnewskt.data.models
 
 data class LoginAuthenticationResponse(
   val id: String = "",

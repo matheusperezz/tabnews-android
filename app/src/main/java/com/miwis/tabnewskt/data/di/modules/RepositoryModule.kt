@@ -2,10 +2,10 @@ package com.miwis.tabnewskt.data.di.modules
 
 import com.miwis.tabnewskt.data.services.AuthService
 import com.miwis.tabnewskt.data.services.PostService
-import com.miwis.tabnewskt.domain.repositories.AuthRepository
-import com.miwis.tabnewskt.domain.repositories.AuthRepositoryImpl
-import com.miwis.tabnewskt.domain.repositories.PostRepository
-import com.miwis.tabnewskt.domain.repositories.PostRepositoryImpl
+import com.miwis.tabnewskt.data.repositories.AuthRepository
+import com.miwis.tabnewskt.data.repositories.AuthRepositoryImpl
+import com.miwis.tabnewskt.data.repositories.PostRepository
+import com.miwis.tabnewskt.data.repositories.PostRepositoryImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

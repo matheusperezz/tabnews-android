@@ -1,8 +1,8 @@
-package com.miwis.tabnewskt.domain.repositories
+package com.miwis.tabnewskt.data.repositories
 
 import com.miwis.tabnewskt.data.services.PostService
-import com.miwis.tabnewskt.domain.models.Post
-import com.miwis.tabnewskt.domain.models.PostDetails
+import com.miwis.tabnewskt.data.models.Post
+import com.miwis.tabnewskt.data.models.PostDetails
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 import retrofit2.http.Path

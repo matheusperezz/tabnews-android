@@ -3,10 +3,10 @@ package com.miwis.tabnewskt.ui.viewmodels
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.miwis.tabnewskt.domain.models.PostDetails
+import com.miwis.tabnewskt.data.models.PostDetails
 import com.miwis.tabnewskt.data.services.PostService
-import com.miwis.tabnewskt.domain.models.Post
-import com.miwis.tabnewskt.domain.repositories.PostRepository
+import com.miwis.tabnewskt.data.models.Post
+import com.miwis.tabnewskt.data.repositories.PostRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
