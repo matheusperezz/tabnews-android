@@ -1,11 +1,11 @@
 package com.miwis.tabnewskt.data.repositories
 
+import com.miwis.tabnewskt.data.dao.PostDao
 import com.miwis.tabnewskt.data.services.PostService
 import com.miwis.tabnewskt.data.models.Post
 import com.miwis.tabnewskt.data.models.PostDetails
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
-import retrofit2.http.Path
 
 interface PostRepository {
   suspend fun fetchFirstRelevants(
@@ -29,10 +29,15 @@ interface PostRepository {
     user: String,
     slug: String
   ): Flow<List<PostDetails>>
+
+  suspend fun insertRecentPosts(
+    posts: List<Post>
+  )
 }
 
 class PostRepositoryImpl(
-  private val service: PostService
+  private val service: PostService,
+  private val dao: PostDao
 ): PostRepository {
   override suspend fun fetchFirstRelevants(page: Int, perPage: Int, strategy: String): Flow<List<Post>> {
     return flowOf(service.fetchFirstRelevants(page, perPage, strategy))
@@ -48,5 +53,9 @@ class PostRepositoryImpl(
 
   override suspend fun fetchChildrensFromPost(user: String, slug: String): Flow<List<PostDetails>> {
     return flowOf(service.fetchChildrensFromPost(user, slug))
+  }
+
+  override suspend fun insertRecentPosts(posts: List<Post>) {
+    dao.insertAllPosts(posts)
   }
 }

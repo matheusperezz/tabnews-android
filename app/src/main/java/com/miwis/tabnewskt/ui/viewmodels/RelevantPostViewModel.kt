@@ -55,6 +55,9 @@ class RelevantPostViewModel @Inject constructor(
     }
   }
 
+  suspend fun insertPost(posts: List<Post>){
+    repository.insertRecentPosts(posts)
+  }
   private suspend fun fetchTabs(): Flow<List<Post>> {
     return try {
       repository.fetchFirstRelevants()
