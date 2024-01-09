@@ -49,13 +49,14 @@ class RelevantPostViewModel @Inject constructor(
           if (posts.isEmpty()) {
             _uiState.update { RelevantUiState.Empty }
           } else {
+            insertPost(posts)
             _uiState.update { RelevantUiState.Sucess(posts) }
           }
         }
     }
   }
 
-  suspend fun insertPost(posts: List<Post>){
+  private suspend fun insertPost(posts: List<Post>){
     repository.insertRecentPosts(posts)
   }
   private suspend fun fetchTabs(): Flow<List<Post>> {
