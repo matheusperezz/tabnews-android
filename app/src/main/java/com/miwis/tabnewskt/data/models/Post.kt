@@ -1,7 +1,11 @@
 package com.miwis.tabnewskt.data.models
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+
+@Entity(tableName = "cache_posts")
 data class Post(
-  val id: String,
+  @PrimaryKey val id: String,
   val owner_id: String?,
   val parend_id: String?,
   val slug: String,
