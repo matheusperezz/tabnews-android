@@ -25,7 +25,7 @@ sealed class RelevantUiState {
 }
 @HiltViewModel
 class RelevantPostViewModel @Inject constructor(
-  private val repository: PostRepository
+  private val repository: PostRepository,
 ) : ViewModel() {
 
   private var currentUiStateJob: Job? = null
@@ -63,10 +63,14 @@ class RelevantPostViewModel @Inject constructor(
     return try {
       repository.fetchFirstRelevants()
     } catch (e: Exception) {
-      // Aqui você pode tratar o erro de falta de conectividade
-      _uiState.update { RelevantUiState.Empty }
-      flowOf(emptyList())
+      val localPosts = repository.getLocalRelevantPosts()
+      if (localPosts.isNotEmpty()){
+        _uiState.update { RelevantUiState.Sucess(localPosts) }
+        flowOf(localPosts)
+      } else {
+        _uiState.update { RelevantUiState.Empty }
+        flowOf(emptyList())
+      }
     }
   }
-
 }

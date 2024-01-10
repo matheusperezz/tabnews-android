@@ -10,13 +10,13 @@ import com.miwis.tabnewskt.data.models.Post
 interface PostDao {
 
   @Query("SELECT * FROM cache_posts")
-  fun getAll(): List<Post>
+  suspend fun getAll(): List<Post>
 
   @Insert(onConflict = IGNORE)
   fun insertPost(post: Post)
 
   @Insert(onConflict = IGNORE)
-  fun insertAllPosts(posts: List<Post>)
+  suspend fun insertAllPosts(posts: List<Post>)
 
   @Query("DELETE FROM cache_posts")
   fun deleteAllPosts()

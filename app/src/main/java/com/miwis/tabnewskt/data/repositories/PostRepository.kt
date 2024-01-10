@@ -33,6 +33,8 @@ interface PostRepository {
   suspend fun insertRecentPosts(
     posts: List<Post>
   )
+
+  suspend fun getLocalRelevantPosts(): List<Post>
 }
 
 class PostRepositoryImpl(
@@ -57,5 +59,9 @@ class PostRepositoryImpl(
 
   override suspend fun insertRecentPosts(posts: List<Post>) {
     dao.insertAllPosts(posts)
+  }
+
+  override suspend fun getLocalRelevantPosts(): List<Post> {
+    return dao.getAll()
   }
 }

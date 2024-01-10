@@ -44,6 +44,7 @@ import dagger.hilt.android.AndroidEntryPoint
  *  Próximos passos:
  *
  *  TODO: Up/DownVote implementado, somente layout
+ *  TODO: Cache funcionando sem internet, porém está salvando tudo (Tem que limitar)
  *
  * **/
 

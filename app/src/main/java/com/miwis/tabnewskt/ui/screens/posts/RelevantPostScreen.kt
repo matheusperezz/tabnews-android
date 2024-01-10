@@ -47,12 +47,6 @@ fun RelevantPostScreen(
     }
 
     is RelevantUiState.Sucess -> {
-      val scope = rememberCoroutineScope()
-      LaunchedEffect(Unit){
-        scope.launch(Dispatchers.IO) {
-          viewModel.insertPost((uiState as RelevantUiState.Sucess).posts)
-        }
-      }
       PostList(
         onPostClick = onPostClick,
         posts = (uiState as RelevantUiState.Sucess).posts,
