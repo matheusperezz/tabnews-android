@@ -1,6 +1,7 @@
 package com.miwis.tabnewskt.data.di.modules
 
 import com.miwis.tabnewskt.data.dao.PostDao
+import com.miwis.tabnewskt.data.dao.PostDetailsDao
 import com.miwis.tabnewskt.data.services.AuthService
 import com.miwis.tabnewskt.data.services.PostService
 import com.miwis.tabnewskt.data.repositories.AuthRepository
@@ -17,8 +18,12 @@ import dagger.hilt.components.SingletonComponent
 object RepositoryModule {
 
   @Provides
-  fun providePostRepository(service: PostService, dao: PostDao): PostRepository {
-    return PostRepositoryImpl(service, dao)
+  fun providePostRepository(
+    service: PostService,
+    postDao: PostDao,
+    detailsDao: PostDetailsDao
+  ): PostRepository {
+    return PostRepositoryImpl(service, postDao, detailsDao)
   }
 
   @Provides

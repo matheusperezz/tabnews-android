@@ -1,7 +1,11 @@
 package com.miwis.tabnewskt.data.models
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+
+@Entity
 data class PostDetails(
-  val id: String,
+  @PrimaryKey val id: String,
   val owner_id: String?,
   val parend_id: String?,
   val slug: String,

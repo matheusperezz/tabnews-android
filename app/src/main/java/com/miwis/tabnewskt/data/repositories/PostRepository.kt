@@ -1,6 +1,7 @@
 package com.miwis.tabnewskt.data.repositories
 
 import com.miwis.tabnewskt.data.dao.PostDao
+import com.miwis.tabnewskt.data.dao.PostDetailsDao
 import com.miwis.tabnewskt.data.services.PostService
 import com.miwis.tabnewskt.data.models.Post
 import com.miwis.tabnewskt.data.models.PostDetails
@@ -39,7 +40,8 @@ interface PostRepository {
 
 class PostRepositoryImpl(
   private val service: PostService,
-  private val dao: PostDao
+  private val postDao: PostDao,
+  private val detailsDao: PostDetailsDao
 ): PostRepository {
   override suspend fun fetchFirstRelevants(page: Int, perPage: Int, strategy: String): Flow<List<Post>> {
     return flowOf(service.fetchFirstRelevants(page, perPage, strategy))
@@ -58,10 +60,10 @@ class PostRepositoryImpl(
   }
 
   override suspend fun insertRecentPosts(posts: List<Post>) {
-    dao.insertAllPosts(posts)
+    postDao.insertAllPosts(posts)
   }
 
   override suspend fun getLocalRelevantPosts(): List<Post> {
-    return dao.getAll()
+    return postDao.getAll()
   }
 }
