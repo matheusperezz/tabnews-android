@@ -18,7 +18,7 @@ fun NavGraphBuilder.mainGraph(navController: NavHostController) {
     route = mainGraphRoute
   ) {
     relevantTabsScreen(navController)
-    newTabsScreen(navController)
+    recentPostScreen(navController)
     settingsScreen(navController)
   }
 }
@@ -36,7 +36,7 @@ fun NavController.navigateSingleTopWithPopUpTo(
       ::navigateToRelevant
     )
     BottomAppBarItem.News -> Pair(
-      newTabsRoute,
+      recentPostRoute,
       ::navigateToNewsTabs
     )
   }

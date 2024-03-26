@@ -21,7 +21,7 @@ import com.miwis.tabnewskt.ui.navigation.auth.loginRoute
 import com.miwis.tabnewskt.ui.navigation.auth.navigateToAuthenticationGraph
 import com.miwis.tabnewskt.ui.navigation.posts.navigateToNewPost
 import com.miwis.tabnewskt.ui.navigation.posts.newPostRoute
-import com.miwis.tabnewskt.ui.navigation.posts.newTabsRoute
+import com.miwis.tabnewskt.ui.navigation.posts.recentPostRoute
 import com.miwis.tabnewskt.ui.navigation.posts.postDetailsRoute
 import com.miwis.tabnewskt.ui.navigation.posts.relevantTabsListRoute
 import com.miwis.tabnewskt.ui.navigation.settings.navigateToSettings
@@ -38,7 +38,7 @@ fun TabnewsApp(
     val currentRoute = currentDestination?.route
 
     val isShowBottomBar = when (currentRoute) {
-      relevantTabsListRoute, newTabsRoute, settingsRoute, postDetailsRoute -> true
+      relevantTabsListRoute, recentPostRoute, settingsRoute, postDetailsRoute -> true
       else -> false
     }
 
@@ -48,8 +48,8 @@ fun TabnewsApp(
     }
 
     val isShowFab = when (currentRoute) {
-      loginRoute, newPostRoute, postDetailsRoute -> false
-      else -> true
+      relevantTabsListRoute, recentPostRoute -> true
+      else -> false
     }
 
     TabnewsKtApp(

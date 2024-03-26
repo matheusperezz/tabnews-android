@@ -1,77 +1,51 @@
 package com.miwis.tabnewskt.ui.screens.posts
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material3.Button
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.Text
+import android.os.Build
+import androidx.annotation.RequiresApi
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.input.ImeAction
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.miwis.tabnewskt.ui.theme.Typography
-import com.miwis.tabnewskt.ui.viewmodels.CreatePostViewModel
+import com.miwis.tabnewskt.data.models.Post
+import com.miwis.tabnewskt.ui.components.NoConnectionFoundBox
+import com.miwis.tabnewskt.ui.components.PostList
+import com.miwis.tabnewskt.ui.viewmodels.RecentPostViewModel
+import com.miwis.tabnewskt.ui.viewmodels.NewsUiState
 
-@OptIn(ExperimentalMaterial3Api::class)
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun RecentPostScreen(
-  viewModel: CreatePostViewModel = hiltViewModel()
+  viewModel: RecentPostViewModel = hiltViewModel(),
+  onPostClick: (Post) -> Unit = {}
 ) {
-
   val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
-  Column(
-    verticalArrangement = Arrangement.spacedBy(
-      space = 16.dp,
-      alignment = Alignment.CenterVertically
-    ),
-    modifier = Modifier
-      .fillMaxWidth()
-      .padding(8.dp)
-  ) {
-
-    Text(text = "Publicar novo conteúdo", style = Typography.titleMedium)
-
-    OutlinedTextField(
-      value = uiState.title,
-      onValueChange = uiState.onTitleChange,
-      modifier = Modifier.fillMaxWidth()
-    )
-
-    OutlinedTextField(
-      value = uiState.body,
-      onValueChange = uiState.onBodyChange,
-      keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
-      modifier = Modifier
-        .fillMaxWidth()
-        .height(120.dp)
-    )
-
-    OutlinedTextField(
-      value = uiState.bibliography,
-      onValueChange = uiState.onBibliographyChange,
-      modifier = Modifier.fillMaxWidth()
-    )
-
-    Button(onClick = { }, modifier = Modifier.fillMaxWidth()) {
-      Text(text = "Submeter")
+  when (uiState) {
+    is NewsUiState.Loading -> {
+      Box(Modifier.fillMaxSize()) {
+        CircularProgressIndicator(
+          Modifier.align(Alignment.Center)
+        )
+      }
     }
-  }
-}
 
-@Preview(showBackground = true)
-@Composable
-fun NewPostScreenPreview() {
-  RecentPostScreen()
+    is NewsUiState.Empty -> {
+      NoConnectionFoundBox {
+        viewModel.loadUiState()
+      }
+    }
+
+    is NewsUiState.Sucess -> {
+      PostList(
+        onPostClick = onPostClick,
+        posts = (uiState as NewsUiState.Sucess).posts,
+      )
+    }
+
+  }
 }

@@ -7,14 +7,14 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
-import com.miwis.tabnewskt.ui.screens.posts.CreatePostScreen
+import com.miwis.tabnewskt.ui.screens.posts.RecentPostScreen
 
-const val newTabsRoute = "news"
+const val recentPostRoute = "news"
 
 @RequiresApi(Build.VERSION_CODES.O)
-fun NavGraphBuilder.newTabsScreen(navController: NavHostController) {
-  composable(newTabsRoute) {
-    CreatePostScreen(
+fun NavGraphBuilder.recentPostScreen(navController: NavHostController) {
+  composable(recentPostRoute) {
+    RecentPostScreen(
       onPostClick = { post ->
         navController.navigateToPostDetails(
           post.id,
@@ -27,5 +27,5 @@ fun NavGraphBuilder.newTabsScreen(navController: NavHostController) {
 }
 
 fun NavController.navigateToNewsTabs(navOptions: NavOptions? = null) {
-  navigate(newTabsRoute, navOptions)
+  navigate(recentPostRoute, navOptions)
 }

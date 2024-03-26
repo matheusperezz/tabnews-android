@@ -2,7 +2,6 @@ package com.miwis.tabnewskt.ui.navigation.posts
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.MailOutline
-import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.ui.graphics.vector.ImageVector
 
@@ -20,7 +19,7 @@ sealed class BottomAppBarItem(
   object News : BottomAppBarItem(
     label = "Recentes",
     icon = Icons.Filled.MailOutline,
-    route = newTabsRoute
+    route = recentPostRoute
   )
 
 }
